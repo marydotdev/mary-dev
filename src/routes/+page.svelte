@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
 	let date = new Date();
 
@@ -33,15 +33,15 @@
 	<meta name="description" content="Mary Haedrich's Website" />
 </svelte:head>
 <div>
-	<div class="mx-auto max-w-2xl py-32 px-4">
-		<div class="font-space">
-			<h1 class="text-3xl font-bold">
+	<div class="mx-auto max-w-7xl">
+		<div class="w-full">
+      <h1 class="text-2xl lg:text-4xl font-semibold">
 				Good {greeting},
 				<br />
 				Visitor.
 			</h1>
 
-			<h2 class="pt-4">{today}<br />{time}</h2>
+			<h2 class="pt-4 text-sm lg:text-base">{today}<br />{time}</h2>
 
 			<div class="pt-8 w-full flex gap-4">
         <a href="mailto:hello@mary.dev" target="_blank">
