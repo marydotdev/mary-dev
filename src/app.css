@@ -13,14 +13,11 @@
 
 html,
 body {
+  font-family: Space Grotesk;
   height: 100%;
 }
 
 body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  overflow-wrap: break-word;
-  overflow-y: auto;
   scrollbar-gutter: stable;
 }
 
