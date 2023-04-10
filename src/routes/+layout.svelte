@@ -1,9 +1,10 @@
 <script>
   import '../app.css';
 	import ThemeToggle from '$lib/ThemeToggle.svelte';
+	import Noise from '$lib/Noise.svelte';
 
 </script>
-
+<Noise />
 <div
 	class="p-6 lg:px-8"
 >
@@ -17,3 +18,5 @@
 	</div>
 	<slot />
 </div>
+
+
