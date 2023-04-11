@@ -9,7 +9,8 @@
 
 	.noise:before {
 		animation: grain 1s steps(1) infinite;
-		background-image: url('/dotnoise-light-grey.png');
+		background-image: url('/otis-redding.png');
+    /* background-image: url('/dotnoise-light-grey.png'); */
 		content: '';
 		position: fixed;
 		height: 300%;
