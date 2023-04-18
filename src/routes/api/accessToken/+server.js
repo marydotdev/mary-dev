@@ -1,10 +1,10 @@
-import { SPOTIFY_CLIENT_ID } from '$env/static/private';
-import { SPOTIFY_CLIENT_SECRET } from '$env/static/private';
-import { SPOTIFY_REFRESH_TOKEN } from '$env/static/private';
+import { PRIVATE_SPOTIFY_CLIENT_ID } from '$env/static/private';
+import { PRIVATE_SPOTIFY_CLIENT_SECRET } from '$env/static/private';
+import { PRIVATE_SPOTIFY_REFRESH_TOKEN } from '$env/static/private';
 
-const client_id = SPOTIFY_CLIENT_ID;
-const client_secret = SPOTIFY_CLIENT_SECRET;
-const refresh_token = SPOTIFY_REFRESH_TOKEN;
+const client_id = PRIVATE_SPOTIFY_CLIENT_ID;
+const client_secret = PRIVATE_SPOTIFY_CLIENT_SECRET;
+const refresh_token = PRIVATE_SPOTIFY_REFRESH_TOKEN;
 const redirect_uri = "http://localhost:3000/"
 const token_endpoint = `https://accounts.spotify.com/api/token`;
 
