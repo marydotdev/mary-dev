@@ -1,9 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap'); */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: local('Space Grotesk'), local('SpaceGrotesk'), url('/fonts/SpaceGrotesk-Regular.ttf');
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: local('Space Grotesk Light'), local('SpaceGrotesk-Light'), url('/fonts/SpaceGrotesk-Light.ttf');
+    font-weight: 300;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: local('Space Grotesk Medium'), local('SpaceGrotesk-Light'), url('/fonts/SpaceGrotesk-Medium.ttf');
+    font-weight: 500;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: local('Space Grotesk SemiBold'), local('SpaceGrotesk-Light'), url('/fonts/SpaceGrotesk-SemiBold.ttf');
+    font-weight: 600;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: local('Space Grotesk Bold'), local('SpaceGrotesk-Bold'), url('/fonts/SpaceGrotesk-Bold.ttf');
+    font-weight: 700;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: local('Space Grotesk Variable'), local('SpaceGrotesk-VariableFont_wght'), url('/fonts/SpaceGrotesk-VariableFont_wght.ttf');
+    font-weight: 125 950;
+    font-stretch: 75% 125%;
+    font-style: oblique 0deg 20deg;
+  }
+
+  @font-face {
+    font-family: 'Space Mono';
+    src: local('Space Mono'), local('SpaceMono'), url('/fonts/SpaceMono-Regular.ttf');
+    font-weight: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Space Mono';
+    src: local('Space Mono Italic'), local('SpaceMonoItalic'), url('/fonts/SpaceMono-Italic.ttf');
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Space Mono';
+    src: local('Space Mono Bold'), local('SpaceMonoBold'), url('/fonts/SpaceMono-Bold.ttf');
+    font-weight: bold;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Space Mono';
+    src: local('Space Mono Bold Italic'), local('SpaceMonoBold'), url('/fonts/SpaceMono-BoldItalic.ttf');
+    font-weight: bold;
+    font-style: italic;
+  }
+}
 
 *,
 *::before,
