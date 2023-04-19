@@ -22,6 +22,21 @@
 
 	$: greeting = hours < 12 ? 'Morning' : hours <= 16 && hours >= 12 ? 'Afternoon' : 'Evening';
 
+  let song;
+  console.log(song)
+
+    async function getNowPlaying() {
+        song = await fetch('https://www.mary.dev/api/nowPlaying')
+    }
+
+    onMount(async () => {
+      getNowPlaying();
+    })
+
+
+    setInterval(() => {
+        getNowPlaying();
+    }, 5000);
 
 	onMount(() => {
 		const interval = setInterval(() => {
@@ -79,5 +94,4 @@
       </div>
     </div>
 </div>
-
 
