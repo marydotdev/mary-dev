@@ -19,4 +19,4 @@
     }, 5000);
 </script>
 
-<p>{song}</p>
+<p>{song.item.title}</p>
