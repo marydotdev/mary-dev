@@ -1,10 +1,7 @@
-<script>
-// @ts-nocheck
-
+<!-- <script>
     import {onMount} from 'svelte';
 
     let song;
-    console.log(song)
 
     async function getNowPlaying() {
       song = await fetch('https://www.mary.dev/api/nowPlaying')
@@ -18,4 +15,4 @@
     }, 5000);
 </script>
 
-
+ -->
