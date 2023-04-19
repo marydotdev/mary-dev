@@ -4,7 +4,7 @@ const now_playing_endpoint = `https://api.spotify.com/v1/me/player/currently-pla
 export async function load({ fetch }) {
     const fetchToken = await fetch(`/api/accessToken`);
     const token = await fetchToken.text();
-    console.log(token)
+    // console.log(token)
 
     const res = await fetch(now_playing_endpoint, {
         headers: {
@@ -13,6 +13,7 @@ export async function load({ fetch }) {
       })
 
       if (res.status === 204 || res.status > 400) {
+        //console.log(res.status, res.statusText)
         return {body: { isPlaying: false }}
       }
 
@@ -28,6 +29,7 @@ export async function load({ fetch }) {
       const songUrl = song?.external_urls.spotify;
 
       if (!isPlaying || trackType === 'undefined') {
+        console.log(token)
         return {body: { isPlaying: false }}
       }
 
