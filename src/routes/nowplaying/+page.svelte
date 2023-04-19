@@ -4,19 +4,18 @@
     import {onMount} from 'svelte';
 
     let song;
+    console.log(song)
 
     async function getNowPlaying() {
-        song = await fetch('https://www.mary.dev/api/nowPlaying')
+      song = await fetch('https://www.mary.dev/api/nowPlaying')
     }
 
     onMount(async () => {
-            getNowPlaying();
+      getNowPlaying();
     })
-
-
     setInterval(() => {
-        getNowPlaying();
+      getNowPlaying();
     }, 5000);
 </script>
 
-<p>{song.item.title}</p>
+
