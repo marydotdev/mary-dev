@@ -5,7 +5,8 @@
 
 	if (browser) {
 		async function getNowPlaying() {
-			song = await fetch('https://mary.dev/api/nowPlaying').then((res) => res.json());
+			song = await fetch('https://www.mary.dev/api/nowPlaying').then((res) => res.json());
+			console.log(song);
 		}
 		onMount(async () => {
 			getNowPlaying();
