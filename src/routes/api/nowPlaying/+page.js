@@ -1,7 +1,8 @@
 const now_playing_endpoint = `https://api.spotify.com/v1/me/player/currently-playing`;
 
-export const GET = async () => {
-  const fetchToken = await fetch(`/api/accessToken`);
+/** @type {import('./$types').PageLoad} */
+export async function load({ fetch }) {
+    const fetchToken = await fetch(`/api/accessToken`);
     const token = await fetchToken.text();
     //console.log(token)
 
@@ -41,5 +42,5 @@ export const GET = async () => {
       return {
         body: { isPlaying, trackType },
       }
-}
+  }
 

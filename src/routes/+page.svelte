@@ -70,7 +70,7 @@
           </svg>
         </div>
         <div>
-          {#if data.body.isPlaying && data.body.song}
+          {#if data.body.isPlaying}
           <a href={songInfo.songUrl} target="_blank">{songInfo.title} <br /> {songInfo.artist}</a>
           {:else}
           <p>Currently offline</p>
