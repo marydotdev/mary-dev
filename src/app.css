@@ -10,35 +10,35 @@
     font-family: 'Space Grotesk';
     src: local('Space Grotesk'), local('SpaceGrotesk'), url('/fonts/SpaceGrotesk-Regular.ttf');
     font-weight: 400;
-    font-display: swap;
+    font-display: block;
   }
 
   @font-face {
     font-family: 'Space Grotesk';
     src: local('Space Grotesk Light'), local('SpaceGrotesk-Light'), url('/fonts/SpaceGrotesk-Light.ttf');
     font-weight: 300;
-    font-display: swap;
+    font-display: block;
   }
 
   @font-face {
     font-family: 'Space Grotesk';
     src: local('Space Grotesk Medium'), local('SpaceGrotesk-Light'), url('/fonts/SpaceGrotesk-Medium.ttf');
     font-weight: 500;
-    font-display: swap;
+    font-display: block;
   }
 
   @font-face {
     font-family: 'Space Grotesk';
     src: local('Space Grotesk SemiBold'), local('SpaceGrotesk-Light'), url('/fonts/SpaceGrotesk-SemiBold.ttf');
     font-weight: 600;
-    font-display: swap;
+    font-display: block;
   }
 
   @font-face {
     font-family: 'Space Grotesk';
     src: local('Space Grotesk Bold'), local('SpaceGrotesk-Bold'), url('/fonts/SpaceGrotesk-Bold.ttf');
     font-weight: 700;
-    font-display: swap;
+    font-display: block;
   }
 
   @font-face {
@@ -53,7 +53,7 @@
     font-family: 'Space Mono';
     src: local('Space Mono'), local('SpaceMono'), url('/fonts/SpaceMono-Regular.ttf');
     font-weight: normal;
-    font-display: swap;
+    font-display: block;
   }
 
   @font-face {
@@ -67,7 +67,7 @@
     font-family: 'Space Mono';
     src: local('Space Mono Bold'), local('SpaceMonoBold'), url('/fonts/SpaceMono-Bold.ttf');
     font-weight: bold;
-    font-display: swap;
+    font-display: block;
   }
 
   @font-face {
