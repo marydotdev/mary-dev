@@ -1,8 +1,9 @@
-import { VITE_SPOTIFY_CLIENT_ID } from '$env/static/private';
+import { SPOTIFY_CLIENT_ID } from '$env/static/private';
 // import { VITE_SPOTIFY_CLIENT_VITE } from '$env/static/private';
 // import { VITE_SPOTIFY_REFRESH_TOKEN } from '$env/static/private';
 
-const client_id = VITE_SPOTIFY_CLIENT_ID;
+const client_id = SPOTIFY_CLIENT_ID;
+
 // const client_secret = import.meta.env.VITE_SPOTIFY_CLIENT_VITE;
 // const refresh_token = import.meta.env.VITE_SPOTIFY_REFRESH_TOKEN;
 
