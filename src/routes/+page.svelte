@@ -2,7 +2,7 @@
 	import Globe from '$lib/Globe.svelte';
 	import { onMount } from 'svelte';
 
-  export let data;
+  	export let data;
 
 	let date = new Date();
 
