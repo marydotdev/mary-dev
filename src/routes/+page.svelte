@@ -53,13 +53,13 @@
 					<span transition:blur={{ delay: 1000, duration: 800, easing: quintIn }}>Visitor.</span>
 				</h1>
 
-				<h2 class="pt-4 text-sm" transition:blur={{ delay: 2000, duration: 400, easing: quintIn }}>
+				<h2 class="pt-4 text-sm" transition:blur={{ delay: 2000, duration: 800, easing: quintIn }}>
 					{today}<br />{time}
 				</h2>
 
 				<div
 					class="pt-8 w-full flex gap-4"
-					transition:blur={{ delay: 2000, duration: 400, easing: quintIn }}
+					transition:blur={{ delay: 2000, duration: 800, easing: quintIn }}
 				>
 					<a href="mailto:hello@mary.dev" target="_blank"> email </a>
 
@@ -71,14 +71,14 @@
 
 			<div
 				class="w-full h-full flex justify-center items-center"
-				transition:blur={{ delay: 2000, duration: 400, easing: quintIn }}
+				transition:blur={{ delay: 2000, duration: 800, easing: quintIn }}
 			>
 				<Globe />
 			</div>
 
 			<div
 				class="pt-12 col-span-2 flex gap-4 items-center text-sm font-mono italic"
-				transition:blur={{ delay: 2000, duration: 400, easing: quintIn }}
+				transition:blur={{ delay: 2000, duration: 800, easing: quintIn }}
 			>
 				<div class="min-w-max">
 					<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
