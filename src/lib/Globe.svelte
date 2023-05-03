@@ -35,6 +35,6 @@
 	});
 </script>
 
-<div class="-mt-4">
+<div>
 	<canvas bind:this={canvas} style="width: 200px; height: 200px" />
 </div>

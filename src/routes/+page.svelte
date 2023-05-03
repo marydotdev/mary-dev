@@ -1,8 +1,6 @@
 <script lang="ts">
 	import Globe from '$lib/Globe.svelte';
 	import { onMount } from 'svelte';
-	import { blur } from 'svelte/transition';
-	import { quintIn } from 'svelte/easing';
 
 	export let data;
 
@@ -45,21 +43,20 @@
 	{#if mounted}
 		<div class="mx-auto max-w-lg pl-4 grid grid-cols-2">
 			<div class="w-64">
-				<h1 class="text-2xl font-bold">
-					<span transition:blur={{ delay: 200, duration: 800, easing: quintIn }}
-						>Good {greeting},</span
+				<h1 class="text-2xl font-medium">
+					<span>Good {greeting},</span
 					>
 					<br />
-					<span transition:blur={{ delay: 1000, duration: 800, easing: quintIn }}>Visitor.</span>
+					<span>Visitor.</span>
 				</h1>
 
-				<h2 class="pt-4 text-sm" transition:blur={{ delay: 2000, duration: 800, easing: quintIn }}>
+				<h2 class="pt-4 text-sm">
 					{today}<br />{time}
 				</h2>
 
 				<div
 					class="pt-8 w-full flex gap-4"
-					transition:blur={{ delay: 2000, duration: 800, easing: quintIn }}
+
 				>
 					<a href="mailto:hello@mary.dev" target="_blank"> email </a>
 
@@ -71,14 +68,13 @@
 
 			<div
 				class="w-full h-full flex justify-center items-center"
-				transition:blur={{ delay: 2000, duration: 800, easing: quintIn }}
 			>
 				<Globe />
 			</div>
 
 			<div
 				class="pt-12 col-span-2 flex gap-4 items-center text-sm font-mono italic"
-				transition:blur={{ delay: 2000, duration: 800, easing: quintIn }}
+
 			>
 				<div class="min-w-max">
 					<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">

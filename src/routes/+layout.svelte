@@ -19,7 +19,7 @@
 </div>
 
 <style>
-  /* .pattern {
+  .pattern {
 		background-image: url('/brilliant.png');
-	} */
+	}
 </style>
