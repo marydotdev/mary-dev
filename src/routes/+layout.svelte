@@ -11,7 +11,7 @@
 		<div class="w-fit">
 			<a href="/" class="font-semibold text-lg">mary.dev</a>
 		</div>
-		<div class="w-fit">
+		<div class="w-fit h-6">
       		<ThemeToggle />
 		</div>
 	</div>
