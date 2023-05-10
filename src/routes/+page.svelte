@@ -17,7 +17,8 @@
 
 	$: time = date.toLocaleTimeString('en-US', {
 		hour: 'numeric',
-		minute: '2-digit'
+		minute: '2-digit',
+		second: 'numeric'
 	});
 	$: hours = date.getHours();
 
@@ -39,13 +40,18 @@
 	<meta name="description" content="Mary Haedrich's Website" />
 </svelte:head>
 
-<div class="overflow-none">
+
+<div class="overflow-none flex">
+	<!-- <div class="hidden sm:flex flex-col gap-2 w-fit p-4">
+		<a href="/">/home</a>
+		<a href="/about">/about</a>
+		<a href="/projects">/projects</a>
+	</div> -->
 	{#if mounted}
-		<div class="mx-auto max-w-lg pl-4 grid grid-cols-2">
+		<div class="w-full p-4">
 			<div class="w-64">
-				<h1 class="text-2xl font-medium">
-					<span>Good {greeting},</span
-					>
+				<h1 class="tracking-tighter text-lg sm:text-2xl font-medium">
+					<span>Good {greeting},</span>
 					<br />
 					<span>Visitor.</span>
 				</h1>
@@ -54,10 +60,7 @@
 					{today}<br />{time}
 				</h2>
 
-				<div
-					class="pt-8 w-full flex gap-4"
-
-				>
+				<div class="pt-8 w-full flex gap-4 text-sm sm:text-base">
 					<a href="mailto:hello@mary.dev" target="_blank"> email </a>
 
 					<a href="https://github.com/marydotdev" target="_blank"> github </a>
@@ -66,16 +69,11 @@
 				</div>
 			</div>
 
-			<div
-				class="w-full h-full flex justify-center items-center"
-			>
+			<!-- <div class="w-full h-full flex justify-center items-center">
 				<Globe />
-			</div>
+			</div> -->
 
-			<div
-				class="pt-12 col-span-2 flex gap-4 items-center text-sm font-mono italic"
-
-			>
+			<div class="pt-12 col-span-2 flex gap-4 items-center text-sm font-mono italic">
 				<div class="min-w-max">
 					<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
 						<path
