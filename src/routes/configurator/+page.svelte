@@ -46,7 +46,7 @@
 	};
 </script>
 
-<div class="max-w-lg sm:max-w-3xl lg:max-w-6xl mx-auto px-4 py-12 dark:text-gray-600">
+<div class="max-w-lg sm:max-w-3xl lg:max-w-6xl mx-auto px-4 py-6 dark:text-gray-600">
 	<h2 class="text-2xl font-semibold dark:text-gray-800">Servo Motor Drive Configurator</h2>
 	<p class="text-sm text-gray-500 dark:text-gray-500">
 		Customize voltage requirements, power levels, form factor, and more.
