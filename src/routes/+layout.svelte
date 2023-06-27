@@ -1,28 +1,23 @@
 <script>
   import '../app.css';
-	import Quadtree from '$lib/Quadtree.svelte';
 	import Nav from '$lib/Nav.svelte';
 	import Footer from '$lib/Footer.svelte';
 
 </script>
 
-<!-- <Quadtree /> -->
 <div class="w-full h-screen font-mono flex flex-col justify-between">
   <Nav />
-  <div class="h-full">
+  <div class="h-full overflow-auto scroll">
     <slot />
   </div>
   <Footer />
 </div>
 
 <style>
-  .pattern {
+  /* .pattern {
 		background-image: url('/otis-redding.png');
-	}
-  .scroll
-  {
-    overflow-y: scroll;
-  }
+	}*/
+  
   .scroll::-webkit-scrollbar-track
   {
     background-color: #fafafa;
