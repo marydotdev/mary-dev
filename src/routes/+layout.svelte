@@ -5,7 +5,7 @@
 
 </script>
 
-<div class="w-full h-screen font-mono flex flex-col justify-between">
+<div class="pattern w-full h-screen flex flex-col justify-between">
   <Nav />
   <div class="h-full overflow-auto scroll">
     <slot />
@@ -14,10 +14,10 @@
 </div>
 
 <style>
-  /* .pattern {
+  .pattern {
 		background-image: url('/otis-redding.png');
-	}*/
-  
+	}
+
   .scroll::-webkit-scrollbar-track
   {
     background-color: #fafafa;
