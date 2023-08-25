@@ -1,15 +1,13 @@
 <script lang="ts">
 	import Weather from '$lib/Weather.svelte';
-	import WeatherArt from '$lib/WeatherArt.svelte';
-	import Wizard from '$lib/Wizard.svelte';
 	import { onMount } from 'svelte';
 
-	export let data;
+	// export let data;
 
 	let date = new Date();
 	let mounted = false;
 
-	$: songInfo = data.body;
+	// $: songInfo = data.body;
 	$: today = date.toLocaleDateString('en-US', {
 		weekday: 'long',
 		year: 'numeric',
@@ -40,39 +38,57 @@
 <svelte:head>
 	<title>mary.dev</title>
 	<meta name="description" content="Mary Haedrich's Website" />
-
 </svelte:head>
-
 
 <div class="h-full flex flex-col">
 	{#if mounted}
 		<div class="m-4">
-				<div class="">
-
-          <div class="w-96 x">
-            <h1 class="tracking-tighter text-2xl font-medium">
+				<div class="flex justify-between border">
+          <div class="w-96">
+            <h1 class="tracking-tighter text-xl sm:text-2xl font-medium">
               <span>Good {greeting},</span>
               <br />
               <span>Visitor.</span>
             </h1>
 
-            <h2 class="text-base">
+            <h2 class="text-sm sm:text-base">
               {today}
               <br />
               <span class="font-mono">{time}</span>
             </h2>
           </div>
+
+          <Weather />
         </div>
 
-				<!-- <div class="w-full flex gap-4 text-sm sm:text-base x">
+
+
+        <!-- {#each data.events as event}
+        <p>{event.type}</p>
+        <p>
+          {new Date(event.createdAt).toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: '2-digit',
+            month: 'numeric',
+            day: 'numeric'
+          })}
+        </p>
+          {#if event.public}
+          <p>{event.repo}</p>
+          {:else}
+          <p>private contribution</p>
+          {/if}
+        {/each} -->
+
+				<!-- <div class="w-full flex gap-4 text-sm sm:text-base">
 					<a href="mailto:hello@mary.dev" target="_blank" rel="noreferrer"> email </a>
 
 					<a href="https://github.com/marydotdev" target="_blank" rel="noreferrer"> github </a>
 
 					<a href="https://twitter.com/marydotdev" target="_blank" rel="noreferrer"> twitter </a>
-				</div>
+				</div> -->
 
-        <div class="flex gap-4 items-center text-sm font-mono italic x">
+        <!-- <div class="flex gap-4 items-center text-sm font-mono italic">
           <div class="min-w-max">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
               <path
@@ -92,12 +108,42 @@
             {/if}
           </div>
 			  </div> -->
+
+        <!-- <div class="flow-root max-w-sm mt-12">
+          <ul role="list" class="-mb-8">
+            {#each data.events as event}
+            <li>
+              <div class="relative pb-8">
+                <div class="relative flex items-center space-x-3">
+                  <div class="">
+                    <span class="h-4 w-4 rounded-full bg-green-500 flex items-center justify-center ring-2 ring-white">
+                    </span>
+                  </div>
+                  <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                    <div>
+                      <p class="text-sm text-gray-500">{event.type}</p>
+                    </div>
+                    <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                      <p>
+                        {new Date(event.createdAt).toLocaleDateString('en-US', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          second: '2-digit',
+                          year: '2-digit',
+                          month: 'numeric',
+                          day: 'numeric',
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {/each}
+          </ul>
+        </div> -->
+
 		</div>
 	{/if}
 </div>
 
-<!-- <style>
-  .x {
-    border: 2px red solid;
-  }
-</style> -->

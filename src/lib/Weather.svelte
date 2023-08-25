@@ -52,14 +52,14 @@
 
 </script>
 
-<div>
+<div class="my-auto h-full flex flex-col">
   {#await weather}
 	<p>...fetching current weather</p>
 {:then data}
 <div class="flex flex-col gap-3">
   <div class="w-full flex items-end">
     <div class="w-fit">
-      <p class="text-base">{Math.round(weatherData.current.temp)}°F</p>
+      <p class="text-sm sm:text-base">{Math.round(weatherData.current.temp)}°F</p>
     </div>
     <div class="w-fit">
 <pre class="w-fit font-mono font-bold text-[10px] leading-3">
@@ -67,7 +67,7 @@
 </pre>
     </div>
   </div>
-  <div class="flex">
+  <div class="flex justify-center">
     <p class="italic text-xs font-mono">{weatherData.current.weather[0].description}</p>
   </div>
 </div>
