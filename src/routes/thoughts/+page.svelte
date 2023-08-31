@@ -2,7 +2,7 @@
   export let data
 </script>
 
-<h2>Blog Posts</h2>
+<h2>Thoughts</h2>
 
 {#each data.countries as country}
 <p>{country.name}</p>

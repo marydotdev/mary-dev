@@ -68,7 +68,7 @@
     </div>
   </div>
   <div class="flex justify-center">
-    <p class="italic text-xs font-mono">{weatherData.current.weather[0].description}</p>
+    <p class="italic text-xs font-mono text-center">{weatherData.current.weather[0].description}</p>
   </div>
 </div>
 {:catch error}

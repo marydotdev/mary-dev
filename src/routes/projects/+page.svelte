@@ -1,11 +1,14 @@
 <script>
-  export let data
-  //console.log(data)
+  import projects from '$lib/projects';
 
 </script>
 
-{#each data.repos as repo}
-<p>{repo.name}</p>
-
-{/each}
+<div class="p-4 flex justify-between">
+  {#each projects as project}
+  <div>
+    <img src={project.image} alt={project.title} class="w-96" />
+    <p>{project.title}</p>
+  </div>
+  {/each}
+</div>
 
