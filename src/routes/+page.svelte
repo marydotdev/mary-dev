@@ -76,13 +76,15 @@
 			</div>
 		</div>
 
-		<div class="max-w-7xl mx-auto flex flex-col">
-			<h3 class="pb-4 text-xl">Recent Work</h3>
-			<div class="mx-auto flex flex-col md:flex-row justify-between gap-4">
+		<div class="max-w-7xl mx-auto md:mr-auto flex flex-col">
+      <h3 class="pb-4 text-xl">Recent Work</h3>
+			<div class="flex flex-col md:flex-row justify-between w-fit md:w-full gap-4">
 				{#each projects as project}
 					<div class="">
-						<img src={project.image} alt={project.title} class="w-96" />
-					</div>
+            <a href={project.url} target="_blank" rel="noreferrer" class="block border-4 border-zinc-800 dark:border-zinc-100">
+						  <img src={project.image} alt={project.title} class="w-96" />
+					  </a>
+          </div>
 				{/each}
 			</div>
 		</div>
