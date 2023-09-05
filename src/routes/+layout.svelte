@@ -7,7 +7,7 @@
 
 <div class="pattern min-h-screen flex flex-col justify-between">
   <Nav />
-  <div class="h-full scroll flex-grow">
+  <div class="h-full overflow-x-hidden  scroll flex-grow">
     <slot />
   </div>
   <Footer />
