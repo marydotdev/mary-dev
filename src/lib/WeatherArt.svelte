@@ -2,7 +2,6 @@
 // @ts-nocheck
   import { weatherCodes, iconArt } from '$lib/weatherData';
 
-
   let currentWeatherCode;
   let weatherData;
 
@@ -52,25 +51,15 @@
 
 </script>
 
-<div class="my-auto h-full flex flex-col">
+<div class="w-fit">
   {#await weather}
 	<p>...fetching current weather</p>
 {:then data}
-<div class="flex flex-col gap-3">
-  <div class="w-full flex items-end">
-    <div class="w-fit">
-      <p class="text-sm sm:text-base">{Math.round(weatherData.current.temp)}°F</p>
-    </div>
-    <div class="w-fit">
-<pre class="w-fit font-mono font-bold text-[10px] leading-3">
+
+<pre class="w-fit text-xs font-mono font-bold">
 {@html getIconArt(currentWeatherCode).join('\n')}
 </pre>
-    </div>
-  </div>
-  <div class="flex justify-center">
-    <p class="italic text-xs font-mono text-center">{weatherData.current.weather[0].description}</p>
-  </div>
-</div>
+
 {:catch error}
 	<p style="color: red">{error.message}</p>
 {/await}

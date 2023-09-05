@@ -1,5 +1,6 @@
 <script>
 	import ThemeToggle from '$lib/ThemeToggle.svelte';
+	import ThemeSwitch from './ThemeSwitch.svelte';
 
 	let showMenu = false;
 
@@ -7,13 +8,14 @@
 		showMenu = !showMenu;
 	}
 </script>
-<nav class="z-10 bg-zinc-50 dark:bg-zinc-900 border-b-2 border-zinc-900 dark:border-zinc-50">
+<nav class="z-10">
   <div class="w-full p-4 flex items-center justify-between">
     <div class="w-fit">
-      <a href="/" class="font-medium text-lg">mary.dev</a>
+      <a href="/" class="font-space font-medium text-lg">mary.dev</a>
     </div>
     <div class="w-fit h-6">
-      <ThemeToggle />
+      <!-- <ThemeToggle /> -->
+      <ThemeSwitch />
       <!-- <div on:click={toggleMenu} class="w-8">
         {#if !showMenu}
           <svg
