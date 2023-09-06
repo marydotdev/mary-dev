@@ -41,7 +41,7 @@
 	<meta name="description" content="Mary Haedrich's Website" />
 </svelte:head>
 
-<div class="h-full p-4">
+<div class="h-full">
 	<div class="flex flex-col gap-12">
 		{#if mounted}
 			<div class="flex justify-between">
