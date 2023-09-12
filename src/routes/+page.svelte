@@ -1,5 +1,7 @@
 <script lang="ts">
-	import Weather from '$lib/Weather.svelte';
+	import HorizontalScroll from '$lib/HorizontalScroll.svelte';
+	import Marquee from '$lib/Marquee.svelte';
+  import Weather from '$lib/Weather.svelte';
 	import projects from '$lib/projects';
 	import { onMount } from 'svelte';
 
