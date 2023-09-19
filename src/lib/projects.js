@@ -2,7 +2,7 @@ const projects = [
     {
       'title': 'Gameday',
       'image': '/img/projects/Gameday.webp',
-      'url': 'https://gameday-nine.vercel.app/'
+      'url': 'https://gamedaylive.vercel.app/'
     },
     {
       'title': 'SOAR',
