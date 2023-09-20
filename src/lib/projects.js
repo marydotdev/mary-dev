@@ -13,6 +13,11 @@ const projects = [
       'title': 'SKTW Starter',
       'image': '/img/projects/SKTW.webp',
       'url': 'https://sktwstarter.vercel.app/'
+    },
+    {
+      'title': "Super Dave's Slot Cars",
+      'image': '/img/projects/SuperDaves.webp',
+      'url': 'https://superdaveslotcars.com/'
     }
   ]
 
