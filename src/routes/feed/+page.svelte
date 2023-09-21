@@ -1,4 +1,6 @@
 <script>
+	import Card from '$lib/Card.svelte';
+
   export let data
 
   function formatTime(dateTime) {
@@ -27,7 +29,8 @@
         <h3 class="pb-4 text-xl">Feed</h3>
         <div class="flex flex-col gap-4">
           {#each data.thoughts as thought}
-            <div class="border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900">
+            <Card item={thought}>
+              <div>
               <div class="p-4 flex flex-col gap-4">
                 <p class="text-lg">{thought.text}</p>
                 {#if (thought.mediaUrl)}
@@ -41,6 +44,7 @@
                 </div>
               </div>
             </div>
+            </Card>
           {/each}
         </div>
       </div>

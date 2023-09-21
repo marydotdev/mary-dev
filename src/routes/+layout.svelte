@@ -14,9 +14,9 @@
 </div>
 
 <style>
-  .pattern {
+  /* .pattern {
 		background-image: url('/otis-redding.png');
-	}
+	} */
 
   .scroll::-webkit-scrollbar-track
   {

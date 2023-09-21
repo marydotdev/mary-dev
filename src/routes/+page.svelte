@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Card from '$lib/Card.svelte';
   import Weather from '$lib/Weather.svelte';
 	import projects from '$lib/projects';
 	import { onMount } from 'svelte';
@@ -7,7 +8,9 @@
 
 	let date = new Date();
 	let mounted = false;
-  let recentlyReadBooks = [];
+  let recentlyReadBooks: any[] = [];
+  let topTracks: any[] = [];
+  let topArtists: any[] = [];
 
 	// $: songInfo = data.body;
 	$: today = date.toLocaleDateString('en-US', {
@@ -31,9 +34,32 @@
     const response = await fetch('/api/read');
     if (response.ok) {
       const allBooks = await response.json();
-      recentlyReadBooks = allBooks.slice(0, 10); // Get the last 5 books
+      recentlyReadBooks = allBooks.slice(0, 10);
     } else {
       console.error('Failed to fetch recently read books');
+    }
+  }
+
+  // Fetch top tracks
+  async function fetchTopTracks() {
+    const response = await fetch('/api/topTracks');
+    if (response.ok) {
+      const data = await response.json();
+      topTracks = data.items.slice(0, 10);
+    } else {
+      console.error('Failed to fetch top tracks');
+    }
+  }
+
+  // Fetch top artists
+  async function fetchTopArtists() {
+    const response = await fetch('/api/topArtists');
+    if (response.ok) {
+      const data = await response.json();
+      topArtists = data.items.slice(0, 10);
+      console.log(topArtists)
+    } else {
+      console.error('Failed to fetch top tracks');
     }
   }
 
@@ -60,6 +86,8 @@
 	onMount(() => {
 		mounted = true;
     fetchRecentlyReadBooks();
+    fetchTopTracks();
+    fetchTopArtists();
 		const interval = setInterval(() => {
 			date = new Date();
 		}, 1000);
@@ -112,12 +140,15 @@
 		</div> -->
     <div class="flex flex-col gap-8 md:flex-row md:gap-4">
       <div class="md:max-w-lg w-full flex-shrink-0">
-        <a href="/feed"><h3 class="pb-4 text-xl">Feed</h3></a>
+        <div class="pb-4">
+          <a href="/feed" class="text-xl hover:underline underline-offset-8">Feed</a>
+        </div>
         <div class="flex flex-col gap-4">
           {#each data.thoughts as thought}
-            <div class="border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900">
+            <Card item={thought}>
+            <div>
               <div class="p-4 flex flex-col gap-4">
-                <p class="text-lg">{thought.text}</p>
+                <p class="text-lg clamp-3">{thought.text}</p>
                 {#if (thought.mediaUrl)}
                   <div class="">
                     <img src={thought.mediaUrl} alt="thought pic" class="object-cover h-96 w-full rounded-xl" />
@@ -129,53 +160,127 @@
                 </div>
               </div>
             </div>
+            </Card>
           {/each}
+          <div class="flex justify-end">
+            <a href='/feed' class="text-md hover:underline underline-offset-8">Read More &rarr;</a>
+          </div>
         </div>
       </div>
       <div class="w-full flex flex-col">
         <h3 class="pb-4 text-xl">Recent Work</h3>
         <div class="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 w-full gap-4">
           {#each projects as project}
-            <div class="border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900">
+          <Card item={project}>
+            <div>
               <a href={project.url} target="_blank" rel="noreferrer" class="block">
                 <img src={project.image} alt={project.title} class="object-cover" />
               </a>
             </div>
+          </Card>
           {/each}
         </div>
       </div>
     </div>
 
     <div class="w-full flex flex-col">
-    <a href="/books" class="pb-4 text-xl">Recently Read</a>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full gap-4">
-      {#each recentlyReadBooks as book}
-        <a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
-          <div class="border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900">
-            <div class="flex gap-2 border">
-              <img src={book.cover} alt={`${book.title} Cover`} class="h-36" />
-              <div class="w-full flex flex-col justify-between p-4">
-                <div class="space-y-1">
-                  <p class="clamp">{book.title}</p>
-                  <p class="text-sm">{book.author}</p>
+      <div class="pb-4">
+        <a href="/books" class="text-xl hover:underline underline-offset-8">Recently Read</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full gap-4">
+        {#each recentlyReadBooks as book}
+          <Card item={book}>
+          <a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
+            <div>
+              <div class="flex gap-2">
+                <img src={book.cover} alt={`${book.title} Cover`} class="h-36" />
+                <div class="w-full flex flex-col justify-between p-4">
+                  <div class="space-y-1">
+                    <p class="clamp">{book.title}</p>
+                    <p class="text-sm">{book.author}</p>
+                  </div>
+                  <p class="w-full text-sm text-right">Read {book.dateRead}</p>
                 </div>
-                <p class="w-full text-sm text-right">Read {book.dateRead}</p>
               </div>
             </div>
-          </div>
-        </a>
-      {/each}
+          </a>
+          </Card>
+        {/each}
+      </div>
+      <div class="pt-4">
+          <a href='/books' class="text-md hover:underline underline-offset-8">View Bookshelf &rarr;</a>
+        </div>
     </div>
-  </div>
+
+    <div class="w-full flex flex-col md:flex-row justify-between gap-8 md:gap-4">
+      <div class="w-full md:w-1/2">
+        <div class="pb-4">
+          <a href="/top#tracks" class="text-xl hover:underline underline-offset-8">Top Tracks</a>
+        </div>
+        <div class="grid grid-cols-1 xl:grid-cols-2 w-full gap-4">
+          {#await topTracks}
+          <p>loading</p>
+          {:then}
+            {#each topTracks as track}
+            <a href={track.external_urls.spotify} target="_blank" rel="noreferrer">
+              <Card item={track}>
+                <div>
+                  <div class="flex gap-2">
+                    <img src={track.album.images[1].url} alt={`${track.album.name} Cover`} class="h-36" />
+                    <div class="w-full p-4">
+                      <div class="space-y-1">
+                        <p class="clamp">{track.name}</p>
+                        <p class="text-sm">{track.artists[0].name}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </a>
+            {/each}
+            <div class="flex flex-col justify-center">
+              <a href='/top#tracks' class="text-md hover:underline underline-offset-8">More Tracks &rarr;</a>
+            </div>
+          {/await}
+        </div>
+      </div>
+      <div class="w-full md:w-1/2">
+        <div class="pb-4">
+          <a href="/top#artists" class="text-xl hover:underline underline-offset-8">Top Artists</a>
+        </div>
+        <div class="grid grid-cols-1 xl:grid-cols-2 w-full gap-4">
+          {#await topArtists}
+            <p>loading</p>
+          {:then}
+            {#each topArtists as artist}
+              <a href={artist.external_urls.spotify} target="_blank" rel="noreferrer">
+                <Card item={artist}>
+                  <div>
+                    <div class="flex gap-2">
+                      <img src={artist.images[1].url} alt={`${artist.name}`} class="h-36 aspect-square" />
+                      <div class="w-full p-4">
+                        <div class="h-full flex flex-col justify-between">
+                          <p class="clamp">{artist.name}</p>
+                          <p class="clamp">
+                            {#each artist.genres as genre, i}
+                            <span>
+                              {genre}{i < artist.genres.length - 1 ? ', ' : ''}
+                            </span>
+                            {/each}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </a>
+              {/each}
+              <div class="flex flex-col justify-center">
+                <a href='/top#artists' class="text-md hover:underline underline-offset-8">More artists &rarr;</a>
+              </div>
+           {/await}
+        </div>
+      </div>
+    </div>
 	</div>
 </div>
-
-<style>
-  .clamp {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
-</style>

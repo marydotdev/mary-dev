@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let data;
-  // console.log(data);
+  console.log(data);
 
 	$: songInfo = data.body;
 

@@ -9,7 +9,7 @@ export async function GET() {
 }
 
 async function getBooks() {
-	const api = `https://www.goodreads.com/review/list/107866526?print=true&shelf=read`
+	const api = `https://www.goodreads.com/review/list/107866526-mary-haedrich?per_page=40&shelf=read&shelves=read&utf8=%E2%9C%93`
 	const response = await fetch(api)
 
 	if (!response.ok) {
@@ -34,7 +34,7 @@ function parseBooks(html) {
     let author = row.querySelector('td.author')?.innerText.trim()
     let cover = row.querySelector('td.cover img')?.src
     let dateRead = row.querySelector('td.date_read')?.innerText.trim()
-    const urlElement = row.querySelector('td.title a'); 
+    const urlElement = row.querySelector('td.title a');
     const url = urlElement ? urlElement.href : ''; // Extract the href attribute
 
     // Clean up the extracted values
@@ -56,5 +56,6 @@ function parseBooks(html) {
   }
 
 
+  // console.log(books)
 	return books
 }
