@@ -30,7 +30,7 @@
         <div class="flex flex-col gap-4">
           {#each data.thoughts as thought}
             <Card item={thought}>
-              <div>
+              <a href={`/feed/${thought.id}`}>
               <div class="p-4 flex flex-col gap-4">
                 <p class="text-lg">{thought.text}</p>
                 {#if (thought.mediaUrl)}
@@ -43,7 +43,7 @@
                   <p>{formatDate(thought.created_at)}</p>
                 </div>
               </div>
-            </div>
+            </a>
             </Card>
           {/each}
         </div>
