@@ -105,7 +105,7 @@
 <div class="h-full">
 	<div class="flex flex-col gap-12">
 		{#if mounted}
-			<div class="flex justify-between">
+			<div class="flex justify-between font-space">
 				<div class="w-72">
 					<h1 class="tracking-tighter text-xl sm:text-2xl font-medium">
 						<span>Good {greeting},</span>
@@ -139,15 +139,14 @@
 			</div>
 		</div> -->
     <div class="flex flex-col gap-8 md:flex-row md:gap-4">
-      <div class="md:max-w-lg w-full flex-shrink-0">
+      <div class="max-w-lg w-full flex-shrink-0">
         <div class="pb-4">
-          <a href="/feed" class="text-xl hover:underline underline-offset-8">Feed</a>
+          <a href="/feed" class="text-lg hover:underline underline-offset-8">Feed</a>
         </div>
         <div class="flex flex-col gap-4">
           {#each data.thoughts as thought}
-            <Card item={thought}>
             <a href={`/feed/${thought.id}`}>
-              <div class="p-4 flex flex-col gap-4">
+              <div class="flex flex-col gap-4">
                 <p class="text-lg clamp-3">{thought.text}</p>
                 {#if (thought.mediaUrl)}
                   <div class="">
@@ -160,15 +159,15 @@
                 </div>
               </div>
             </a>
-            </Card>
+            <hr class="border border-zinc-200 dark:border-zinc-600" />
           {/each}
           <div class="flex justify-end">
             <a href='/feed' class="text-md hover:underline underline-offset-8">Read More &rarr;</a>
           </div>
         </div>
       </div>
-      <div class="w-full flex flex-col">
-        <h3 class="pb-4 text-xl">Recent Work</h3>
+      <div class="max-w-4xl w-full flex flex-col">
+        <h3 class="pb-4 text-lg">Recent Work</h3>
         <div class="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 w-full gap-4">
           {#each projects as project}
           <Card item={project}>
@@ -185,7 +184,7 @@
 
     <div class="w-full flex flex-col">
       <div class="pb-4">
-        <a href="/books" class="text-xl hover:underline underline-offset-8">Recently Read</a>
+        <a href="/books" class="text-lg hover:underline underline-offset-8">Recently Read</a>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full gap-4">
         {#each recentlyReadBooks as book}
@@ -215,7 +214,7 @@
     <div class="w-full flex flex-col md:flex-row justify-between gap-8 md:gap-4">
       <div class="w-full md:w-1/2">
         <div class="pb-4">
-          <a href="/top#tracks" class="text-xl hover:underline underline-offset-8">Top Tracks</a>
+          <a href="/top#tracks" class="text-lg hover:underline underline-offset-8">Top Tracks</a>
         </div>
         <div class="grid grid-cols-1 xl:grid-cols-2 w-full gap-4">
           {#await topTracks}
@@ -246,7 +245,7 @@
       </div>
       <div class="w-full md:w-1/2">
         <div class="pb-4">
-          <a href="/top#artists" class="text-xl hover:underline underline-offset-8">Top Artists</a>
+          <a href="/top#artists" class="text-lg hover:underline underline-offset-8">Top Artists</a>
         </div>
         <div class="grid grid-cols-1 xl:grid-cols-2 w-full gap-4">
           {#await topArtists}
