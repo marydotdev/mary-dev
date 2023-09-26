@@ -291,4 +291,20 @@
 			transform: translateX(0);
 		}
 	}
+
+    /* Mobile styles */
+  @media (max-width: 768px) {
+    .marquee {
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+    }
+
+
+    .marquee__content {
+			animation-play-state: paused !important;
+		}
+  }
 </style>
