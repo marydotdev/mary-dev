@@ -52,7 +52,7 @@
 
 <button
   class="{classNames(
-    dark ? 'bg-zinc-600' : 'bg-zinc-200',
+    dark ? 'bg-black' : 'bg-zinc-100',
     'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2'
   )}"
   on:click="{toggle}"
@@ -88,7 +88,7 @@
       )}"
       aria-hidden="true"
     >
-      <svg class="h-4 w-4 text-zinc-500" fill="currentColor" viewBox="0 0 24 24">
+      <svg class="h-4 w-4 text-zinc-900" fill="currentColor" viewBox="0 0 24 24">
         <path
           d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
           stroke="currentColor"

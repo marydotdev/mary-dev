@@ -80,6 +80,10 @@
   max-width: fit-content;
 }
 
+.marquee--reverse  {
+  animation-direction: reverse;
+  animation-delay: -3s;
+}
 
 @keyframes scroll-abs {
   from {
