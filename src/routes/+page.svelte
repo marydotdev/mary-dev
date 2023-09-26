@@ -61,7 +61,7 @@
 		}
 	}
 
-	function formatTime(dateTime) {
+	function formatTime(dateTime: string | number | Date) {
 		let time = new Date(dateTime).toLocaleTimeString('en-US', {
 			hour: 'numeric',
 			minute: '2-digit'
@@ -70,7 +70,7 @@
 		return time;
 	}
 
-	function formatDate(dateTime) {
+	function formatDate(dateTime: string | number | Date) {
 		let date = new Date(dateTime).toLocaleDateString('en-US', {
 			weekday: 'short',
 			year: 'numeric',
@@ -125,7 +125,9 @@
 		<div class="flex flex-col gap-8 md:flex-row md:justify-between md:gap-4">
 			<div class="py-4 md:max-w-xl w-full">
 				<div class="pb-4">
-					<h3 class="text-lg sm:text-xl font-medium"><a href="/feed" class="hover:underline underline-offset-8">Feed</a></h3>
+					<h3 class="text-lg sm:text-xl font-medium">
+						<a href="/feed" class="hover:underline underline-offset-8">Feed</a>
+					</h3>
 				</div>
 				<div class="flex flex-col gap-4">
 					{#each data.thoughts as thought}
@@ -156,9 +158,12 @@
 			</div>
 
 			<div
-				class="p-4 flex-shrink-0 md:max-w-xs lg:max-w-sm w-full bg-zinc-50 text-zinc-900 dark:bg-black dark:text-zinc-50 rounded-xl shadow-inner">
+				class="p-4 flex-shrink-0 md:max-w-xs lg:max-w-sm w-full bg-zinc-50 text-zinc-900 dark:bg-black dark:text-zinc-50 rounded-xl shadow-inner"
+			>
 				<div class="pb-4">
-					<h3 class="text-lg sm:text-xl font-medium"><a href="/top#tracks" class="hover:underline underline-offset-8">Top Tracks</a></h3>
+					<h3 class="text-lg sm:text-xl font-medium">
+						<a href="/music" class="hover:underline underline-offset-8">Top Tracks</a>
+					</h3>
 				</div>
 				<ol class="flex flex-col gap-4">
 					{#await topTracks}
@@ -184,7 +189,9 @@
 
 		<div class="w-full">
 			<div class="pb-4">
-				<h3 class="text-lg sm:text-xl font-medium"><a href="/books" class="hover:underline underline-offset-8">Recently Read</a></h3>
+				<h3 class="text-lg sm:text-xl font-medium">
+					<a href="/books" class="hover:underline underline-offset-8">Recently Read</a>
+				</h3>
 			</div>
 			<div class="w-full marquee marquee--fit-content marquee--hover-pause">
 				<ul class="marquee__content">
@@ -192,13 +199,17 @@
 						<li class="flex-shrink-0 relative group">
 							<a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
 								<img src={book.cover} alt={`${book.title} Cover`} class="h-36 xl:h-48 mx-auto" />
-								<div class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80  hover:backdrop-blur-sm">
-									<div class="h-full p-1 flex flex-col justify-between invisible group-hover:visible">
+								<div
+									class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80  hover:backdrop-blur-sm"
+								>
+									<div
+										class="h-full p-1 flex flex-col justify-between invisible group-hover:visible"
+									>
 										<div>
-                      <p class="clamp text-sm">{book.title}</p>
-										  <p class="text-sm">{book.author}</p>
-                    </div>
-                    <p class="w-full text-xs">Read {book.dateRead}</p>
+											<p class="clamp text-sm">{book.title}</p>
+											<p class="text-sm">{book.author}</p>
+										</div>
+										<p class="w-full text-xs">Read {book.dateRead}</p>
 									</div>
 								</div>
 							</a>
@@ -210,13 +221,17 @@
 						<li class="flex-shrink-0 relative group">
 							<a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
 								<img src={book.cover} alt={`${book.title} Cover`} class="h-36 xl:h-48 mx-auto" />
-								<div class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80 hover:backdrop-blur-sm">
-									<div class="h-full p-1 flex flex-col justify-between invisible group-hover:visible">
+								<div
+									class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80 hover:backdrop-blur-sm"
+								>
+									<div
+										class="h-full p-1 flex flex-col justify-between invisible group-hover:visible"
+									>
 										<div>
-                      <p class="clamp text-sm">{book.title}</p>
-										  <p class="text-sm">{book.author}</p>
-                    </div>
-                    <p class="w-full text-xs">Read {book.dateRead}</p>
+											<p class="clamp text-sm">{book.title}</p>
+											<p class="text-sm">{book.author}</p>
+										</div>
+										<p class="w-full text-xs">Read {book.dateRead}</p>
 									</div>
 								</div>
 							</a>
@@ -292,19 +307,18 @@
 		}
 	}
 
-    /* Mobile styles */
-  @media (max-width: 768px) {
-    .marquee {
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
-    }
+	/* Mobile styles */
+	@media (max-width: 768px) {
+		.marquee {
+			overflow-x: auto;
+			overflow-y: hidden;
+			white-space: nowrap;
+			scrollbar-width: thin;
+			scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+		}
 
-
-    .marquee__content {
+		.marquee__content {
 			animation-play-state: paused !important;
 		}
-  }
+	}
 </style>

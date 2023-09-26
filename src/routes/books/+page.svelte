@@ -5,10 +5,10 @@
 </script>
 
 <div>
-  <div class="pb-4">
-    <h2 class=""><a href='https://www.goodreads.com/review/list/107866526?shelf=read' target="_blank" rel="noreferrer" class="text-xl hover:underline underline-offset-8">Read</a></h2>
-
-  </div>
+  <div class="pb-4 space-y-1">
+		<h3 class="text-lg sm:text-xl font-medium">Recently Read Books</h3>
+    <p class="text-sm pb-4">Freshly scraped from my <a href="https://www.goodreads.com/review/list/107866526-mary-haedrich?ref=nav_mybooks&shelf=read" target="_blank" rel="noreferrer" class="hover:underline underline-offset-4">goodreads shelf</a>!</p>
+	</div>
   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
     {#each data.books as book}
     <Card item={book}>

@@ -1,6 +1,9 @@
 <script>
 	export let data;
 
+	/**
+	 * @param {string | number | Date} dateTime
+	 */
 	function formatTime(dateTime) {
 		let time = new Date(dateTime).toLocaleTimeString('en-US', {
 			hour: 'numeric',
@@ -10,6 +13,9 @@
 		return time;
 	}
 
+	/**
+	 * @param {string | number | Date} dateTime
+	 */
 	function formatDate(dateTime) {
 		let date = new Date(dateTime).toLocaleDateString('en-US', {
 			weekday: 'short',
@@ -26,7 +32,6 @@
 	<div class="pb-4 space-y-1">
 		<h3 class="text-lg sm:text-xl font-medium">Feed</h3>
     <p class="text-sm pb-4">An ode to old Twitter. No threads. No replies. No editing. Typos rejoice!</p>
-    <!-- <hr class="border border-zinc-200 dark:border-zinc-600" /> -->
 	</div>
 	<div class="flex flex-col gap-4">
 		{#each data.thoughts as thought}
