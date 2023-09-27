@@ -31,7 +31,9 @@
 <div class="md:max-w-xl w-full">
 	<div class="pb-4 space-y-1">
 		<h3 class="text-lg sm:text-xl font-medium">Feed</h3>
-    <p class="text-sm pb-4">An ode to old Twitter. No threads. No replies. No editing. Typos rejoice!</p>
+		<p class="text-sm pb-4">
+			An ode to old Twitter. No threads. No replies. No editing. Typos rejoice!
+		</p>
 	</div>
 	<div class="flex flex-col gap-4">
 		{#each data.thoughts as thought}
