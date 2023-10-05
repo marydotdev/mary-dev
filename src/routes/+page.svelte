@@ -158,7 +158,7 @@
 			</div>
 
 			<div
-				class="p-4 flex-shrink-0 md:max-w-xs lg:max-w-sm w-full bg-zinc-50 text-zinc-900 dark:bg-black dark:text-zinc-50 rounded-xl shadow-inner"
+				class="p-4 flex-shrink-0 md:max-w-xs lg:max-w-sm w-full h-fit bg-zinc-50 text-zinc-900 dark:bg-black dark:text-zinc-50 rounded-xl shadow-inner"
 			>
 				<div class="pb-4">
 					<h3 class="text-lg sm:text-xl font-medium">
