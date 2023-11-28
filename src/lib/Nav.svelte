@@ -3,7 +3,7 @@
 	import ThemeSwitch from './ThemeSwitch.svelte';
 
   const navLinks = [
-		{ href: '/feed', label: 'Feed' },
+		{ href: '/posts', label: 'Posts' },
 		{ href: '/about', label: 'About' },
 		{ href: '/', label: 'Dashboard' },
 		{ href: '/books', label: 'Books' },

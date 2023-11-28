@@ -36,7 +36,7 @@
 	</div>
 </div>
 
-<div class="py-12 space-y-8">
+<!-- <div class="py-12 space-y-8">
 	<section class="space-y-4">
 		<h2 class="font-bold">EXPERIENCE</h2>
 		<div class="max-w-md flex justify-start items-center gap-4">
@@ -103,4 +103,4 @@
 			</div>
 		</div>
 	</section>
-</div>
+</div> -->

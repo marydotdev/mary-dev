@@ -2,10 +2,9 @@
 	import Weather from '$lib/Weather.svelte';
 	import { onMount } from 'svelte';
 
-	export let data;
-
 	let date = new Date();
 	let mounted = false;
+  let recentPosts: any[] = [];
 	let recentlyReadBooks: any[] = [];
 	let topTracks: any[] = [];
 	let topArtists: any[] = [];
@@ -26,6 +25,17 @@
 	$: hours = date.getHours();
 
 	$: greeting = hours < 12 ? 'Morning' : hours <= 16 && hours >= 12 ? 'Afternoon' : 'Evening';
+
+  // Fetch recently read books
+	async function fetchPosts() {
+		const response = await fetch('/api/getPosts');
+		if (response.ok) {
+			const allPosts = await response.json();
+			recentPosts = allPosts.slice(0, 10);
+		} else {
+			console.error('Failed to fetch recently read books');
+		}
+	}
 
 	// Fetch recently read books
 	async function fetchRecentlyReadBooks() {
@@ -83,6 +93,7 @@
 
 	onMount(() => {
 		mounted = true;
+    fetchPosts();
 		fetchTopTracks();
 		fetchRecentlyReadBooks();
 		const interval = setInterval(() => {
@@ -126,34 +137,23 @@
 			<div class="py-4 md:max-w-xl w-full">
 				<div class="pb-4">
 					<h3 class="text-lg sm:text-xl font-medium">
-						<a href="/feed" class="hover:underline underline-offset-8">Feed</a>
+						<a href="/posts" class="hover:underline underline-offset-8">Recent Posts</a>
 					</h3>
 				</div>
 				<div class="flex flex-col gap-4">
-					{#each data.thoughts as thought}
-						<a href={`/feed/${thought.id}`}>
+					{#each recentPosts as thought}
 							<div class="flex flex-col gap-4">
 								<p class="text-lg clamp-3">{thought.text}</p>
-								{#if thought.mediaUrl}
-									<div class="">
-										<img
-											src={thought.mediaUrl}
-											alt="thought pic"
-											class="object-cover h-96 w-full rounded-xl"
-										/>
-									</div>
-								{/if}
 								<div class="flex justify-between">
-									<p>{formatTime(thought.created_at)}</p>
-									<p>{formatDate(thought.created_at)}</p>
+									<p>{formatTime(thought.date)}</p>
+									<p>{formatDate(thought.date)}</p>
 								</div>
 							</div>
-						</a>
 						<hr class="border border-zinc-200 dark:border-zinc-600" />
 					{/each}
 				</div>
 				<div class="pt-4 flex justify-end">
-					<a href="/feed" class="text-base hover:underline underline-offset-8">Read More &rarr;</a>
+					<a href="/posts" class="text-base hover:underline underline-offset-8">Read More &rarr;</a>
 				</div>
 			</div>
 
