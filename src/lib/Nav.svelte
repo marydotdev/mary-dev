@@ -17,7 +17,7 @@
 
 </script>
 <nav class="z-10">
-  <div class="hidden md:block sticky inset-0 top-6 max-w-sm mx-auto">
+  <!-- <div class="hidden md:block sticky inset-0 top-6 max-w-sm mx-auto">
     <ul class="w-full flex justify-between rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
       {#each navLinks as nav}
       <li class="relative">
@@ -28,7 +28,7 @@
       </li>
       {/each}
     </ul>
-  </div>
+  </div> -->
   <div class="w-full p-4 flex items-center justify-between">
     <div class="w-fit">
       <a href="/" class="font-space font-medium text-lg">mary.dev</a>

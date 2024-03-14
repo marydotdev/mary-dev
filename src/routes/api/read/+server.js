@@ -41,7 +41,7 @@ function parseBooks(html) {
     title = title ? title.replace("title\n  ", "").trim() : "";
     author = author ? author.replace("author\n ", "").replace(/\*$/, "").trim() : "";
     dateRead = dateRead ? dateRead.replace("date read\n \n \n ", "").replace("not set", "").trim() : "";
-    cover = cover ? cover.replace("_SY75_", "_SY180_") : "";
+    cover = cover ? cover.replace('_SY75_', '_SY180_').replace('_SX50_', '_SY180_') : '';
 
     if (title && author) {
       const book = {

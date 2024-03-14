@@ -111,7 +111,7 @@
 </svelte:head>
 
 <div class="h-full">
-	<div class="flex flex-col gap-4">
+	<div class="flex flex-col gap-20 md:gap-8">
 		{#if mounted}
 			<div class="flex justify-between font-space">
 				<div class="w-72">
@@ -133,59 +133,19 @@
 			</div>
 		{/if}
 
-		<div class="flex flex-col gap-8 md:flex-row md:justify-between md:gap-4">
-			<div class="py-4 md:max-w-xl w-full">
-				<div class="pb-4">
-					<h3 class="text-lg sm:text-xl font-medium">
-						<a href="/posts" class="hover:underline underline-offset-8">Recent Posts</a>
-					</h3>
-				</div>
-				<div class="flex flex-col gap-4">
-					{#each recentPosts as thought}
-							<div class="flex flex-col gap-4">
-								<p class="text-lg clamp-3">{thought.text}</p>
-								<div class="flex justify-between">
-									<p>{formatTime(thought.date)}</p>
-									<p>{formatDate(thought.date)}</p>
-								</div>
-							</div>
-						<hr class="border border-zinc-200 dark:border-zinc-600" />
-					{/each}
-				</div>
-				<div class="pt-4 flex justify-end">
-					<a href="/posts" class="text-base hover:underline underline-offset-8">Read More &rarr;</a>
-				</div>
-			</div>
+    <!-- <div class="flex gap-2">
+      <img src="/img/rainmary.png" alt="Mary Haedrich" class="w-12 h-12 md:w-16 md:h-16 rounded-xl" />
+      <div>
+        <h3>computer mary</h3>
+        <h4>@marydotdev</h4>
+      </div>
+    </div> -->
 
-			<div
-				class="p-4 flex-shrink-0 md:max-w-xs lg:max-w-sm w-full h-fit bg-zinc-50 text-zinc-900 dark:bg-black dark:text-zinc-50 rounded-xl shadow-inner"
-			>
-				<div class="pb-4">
-					<h3 class="text-lg sm:text-xl font-medium">
-						<a href="/music" class="hover:underline underline-offset-8">Top Tracks</a>
-					</h3>
-				</div>
-				<ol class="flex flex-col gap-4">
-					{#await topTracks}
-						<p>loading</p>
-					{:then}
-						{#each topTracks as track}
-							<li>
-								<a href={track.external_urls.spotify} target="_blank" rel="noreferrer">
-									<div>
-										<div class="space-y-1">
-											<p class="clamp">{track.name}</p>
-											<p class="text-sm">{track.artists[0].name}</p>
-										</div>
-									</div>
-								</a>
-							</li>
-							<hr class="last:hidden border border-zinc-200 dark:border-zinc-600" />
-						{/each}
-					{/await}
-				</ol>
-			</div>
-		</div>
+    <div class="p-4 bg-zinc-100 hover:bg-zinc-200 dark:bg-black hover:dark:bg-zinc-800">
+      <a href="https://brickbloom.com" target="_blank" rel="noreferrer">
+        <img src="/img/bluejay-wide.png" alt="Brickbloom" class="rounded-xl" />
+      </a>
+    </div>
 
 		<div class="w-full">
 			<div class="pb-4">
@@ -322,3 +282,4 @@
 		}
 	}
 </style>
+
