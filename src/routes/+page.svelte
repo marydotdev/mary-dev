@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Weather from '$lib/Weather.svelte';
+	import Grid from '$lib/Grid.svelte';
+import Weather from '$lib/Weather.svelte';
 	import { onMount } from 'svelte';
 
 	let date = new Date();
@@ -110,44 +111,12 @@
 	<meta name="description" content="Mary Haedrich's Website" />
 </svelte:head>
 
-<div class="h-full">
-	<div class="flex flex-col gap-20 md:gap-8">
-		{#if mounted}
-			<div class="flex justify-between font-space">
-				<div class="w-72">
-					<h1 class="tracking-tighter text-xl sm:text-2xl font-medium">
-						<span>Good {greeting},</span>
-						<br />
-						<span>Visitor.</span>
-					</h1>
-
-					<h2 class="text-sm sm:text-base">
-						{today}
-						<br />
-						<span class="font-mono">{time}</span>
-					</h2>
-				</div>
-				<div class="flex justify-end">
-					<Weather />
-				</div>
-			</div>
-		{/if}
-
-    <!-- <div class="flex gap-2">
-      <img src="/img/rainmary.png" alt="Mary Haedrich" class="w-12 h-12 md:w-16 md:h-16 rounded-xl" />
-      <div>
-        <h3>computer mary</h3>
-        <h4>@marydotdev</h4>
-      </div>
-    </div> -->
-
-    <div class="p-4 bg-zinc-100 hover:bg-zinc-200 dark:bg-black hover:dark:bg-zinc-800">
-      <a href="https://brickbloom.com" target="_blank" rel="noreferrer">
-        <img src="/img/bluejay-wide.png" alt="Brickbloom" class="rounded-xl" />
-      </a>
-    </div>
-
-		<div class="w-full">
+<div class="p-2 sm:p-4 md:p-8 w-full">
+  <div class="w-full h-[600px] lg:h-[800px]">
+  <Grid {greeting} {today} {time} {mounted} {Weather} />
+</div>
+<div>
+  <div class="w-full border-2 border-black p-4 mt-2">
 			<div class="pb-4">
 				<h3 class="text-lg sm:text-xl font-medium">
 					<a href="/books" class="hover:underline underline-offset-8">Recently Read</a>
@@ -203,7 +172,104 @@
 				<a href="/books" class="text-md hover:underline underline-offset-8">View Bookshelf &rarr;</a
 				>
 			</div>
-		</div>
+	</div>
+</div>
+</div>
+
+<div class="h-full">
+	<div class="flex flex-col gap-20 md:gap-8">
+		<!-- {#if mounted}
+			<div class="flex justify-between font-space">
+				<div class="w-72">
+					<h1 class="tracking-tighter text-xl sm:text-2xl font-medium">
+						<span>Good {greeting},</span>
+						<br />
+						<span>Visitor.</span>
+					</h1>
+
+					<h2 class="text-sm sm:text-base">
+						{today}
+						<br />
+						<span class="font-mono">{time}</span>
+					</h2>
+				</div>
+				<div class="flex justify-end">
+					<Weather />
+				</div>
+			</div>
+		{/if} -->
+
+    <!-- <div class="flex gap-2">
+      <img src="/img/rainmary.png" alt="Mary Haedrich" class="w-12 h-12 md:w-16 md:h-16 rounded-xl" />
+      <div>
+        <h3>computer mary</h3>
+        <h4>@marydotdev</h4>
+      </div>
+    </div> -->
+
+    <!-- <div class="p-4 bg-zinc-100 hover:bg-zinc-200 dark:bg-black hover:dark:bg-zinc-800">
+      <a href="https://brickbloom.com" target="_blank" rel="noreferrer">
+        <img src="/img/bluejay-wide.png" alt="Brickbloom" class="rounded-xl" />
+      </a>
+    </div> -->
+
+		<!-- <div class="w-full border-2 border-black">
+			<div class="pb-4">
+				<h3 class="text-lg sm:text-xl font-medium">
+					<a href="/books" class="hover:underline underline-offset-8">Recently Read</a>
+				</h3>
+			</div>
+			<div class="w-full marquee marquee--fit-content marquee--hover-pause">
+				<ul class="marquee__content">
+					{#each recentlyReadBooks as book}
+						<li class="flex-shrink-0 relative group">
+							<a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
+								<img src={book.cover} alt={`${book.title} Cover`} class="h-36 xl:h-48 mx-auto" />
+								<div
+									class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80  hover:backdrop-blur-sm"
+								>
+									<div
+										class="h-full p-1 flex flex-col justify-between invisible group-hover:visible"
+									>
+										<div>
+											<p class="clamp text-sm">{book.title}</p>
+											<p class="text-sm">{book.author}</p>
+										</div>
+										<p class="w-full text-xs">Read {book.dateRead}</p>
+									</div>
+								</div>
+							</a>
+						</li>
+					{/each}
+				</ul>
+				<ul class="marquee__content">
+					{#each recentlyReadBooks as book}
+						<li class="flex-shrink-0 relative group">
+							<a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
+								<img src={book.cover} alt={`${book.title} Cover`} class="h-36 xl:h-48 mx-auto" />
+								<div
+									class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80 hover:backdrop-blur-sm"
+								>
+									<div
+										class="h-full p-1 flex flex-col justify-between invisible group-hover:visible"
+									>
+										<div>
+											<p class="clamp text-sm">{book.title}</p>
+											<p class="text-sm">{book.author}</p>
+										</div>
+										<p class="w-full text-xs">Read {book.dateRead}</p>
+									</div>
+								</div>
+							</a>
+						</li>
+					{/each}
+				</ul>
+			</div>
+			<div class="pt-4">
+				<a href="/books" class="text-md hover:underline underline-offset-8">View Bookshelf &rarr;</a
+				>
+			</div>
+		</div> -->
 	</div>
 </div>
 

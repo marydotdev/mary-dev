@@ -4,8 +4,8 @@
 	import Footer from '$lib/Footer.svelte';
 </script>
 
-<div>
-	<div class="fixed inset-0 flex justify-center">
+<div class="w-full max-w-[2000px] mx-auto min-h-screen flex flex-col justify-center">
+	<!-- <div class="fixed inset-0 flex justify-center">
 		<div class="flex w-full max-w-7xl lg:px-8">
 			<div class="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
 		</div>
@@ -18,7 +18,8 @@
 			<slot />
 		</div>
 		<Footer />
-	</div>
+	</div> -->
+  <slot />
 </div>
 
 <style>
