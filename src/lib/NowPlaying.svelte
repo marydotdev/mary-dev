@@ -17,6 +17,11 @@
     noRecentTracks?: boolean;
   }
 
+  interface SavedTrackData {
+    track: Track;
+    lastPlayedAt: string;
+  }
+
   let currentTrack: NowPlayingData | null = null;
   let lastPlayedTrack: Track | null = null;
   let error: string | null = null;
@@ -33,13 +38,18 @@
     return `${Math.floor(diffInSeconds / 86400)} days ago`;
   }
 
-  function saveLastPlayedTrack(track: Track) {
-    localStorage.setItem('lastPlayedTrack', JSON.stringify(track));
+  function saveLastPlayedTrack(track: Track, lastPlayedAt: string) {
+    const savedData: SavedTrackData = { track, lastPlayedAt };
+    localStorage.setItem('lastPlayedTrackData', JSON.stringify(savedData));
   }
 
-  function loadLastPlayedTrack(): Track | null {
-    const savedTrack = localStorage.getItem('lastPlayedTrack');
-    return savedTrack ? JSON.parse(savedTrack) : null;
+  function loadLastPlayedTrackData(): SavedTrackData | null {
+    const savedData = localStorage.getItem('lastPlayedTrackData');
+    return savedData ? JSON.parse(savedData) : null;
+  }
+
+  function updateTimeSinceLastPlay(lastPlayedAt: string) {
+    timeSinceLastPlay = formatTimeSince(lastPlayedAt);
   }
 
   async function fetchNowPlaying() {
@@ -50,20 +60,24 @@
       if (response.ok) {
         console.log('Parsed API response:', data);
 
-        if (data.isPlaying && data.song) {
+        if (data.isPlaying && data.song && data.lastPlayedAt) {
           currentTrack = data;
           lastPlayedTrack = data.song;
-          saveLastPlayedTrack(data.song);
+          saveLastPlayedTrack(data.song, data.lastPlayedAt);
+          updateTimeSinceLastPlay(data.lastPlayedAt);
         } else if (data.noRecentTracks) {
-          lastPlayedTrack = loadLastPlayedTrack();
-          currentTrack = lastPlayedTrack ? { ...data, song: lastPlayedTrack } : data;
+          const savedData = loadLastPlayedTrackData();
+          if (savedData) {
+            lastPlayedTrack = savedData.track;
+            currentTrack = { ...data, song: savedData.track };
+            updateTimeSinceLastPlay(savedData.lastPlayedAt);
+          } else {
+            currentTrack = data;
+          }
         } else {
           currentTrack = data;
         }
 
-        if (data.lastPlayedAt) {
-          timeSinceLastPlay = formatTimeSince(data.lastPlayedAt);
-        }
         error = null;
       } else {
         error = `Failed to fetch now playing data: ${response.status} ${response.statusText}`;
@@ -80,7 +94,11 @@
   }
 
   onMount(() => {
-    lastPlayedTrack = loadLastPlayedTrack();
+    const savedData = loadLastPlayedTrackData();
+    if (savedData) {
+      lastPlayedTrack = savedData.track;
+      updateTimeSinceLastPlay(savedData.lastPlayedAt);
+    }
     fetchNowPlaying();
     const interval = setInterval(fetchNowPlaying, 30000); // Update every 30 seconds
     return () => clearInterval(interval);
