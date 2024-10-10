@@ -33,6 +33,15 @@
     return `${Math.floor(diffInSeconds / 86400)} days ago`;
   }
 
+  function saveLastPlayedTrack(track: Track) {
+    localStorage.setItem('lastPlayedTrack', JSON.stringify(track));
+  }
+
+  function loadLastPlayedTrack(): Track | null {
+    const savedTrack = localStorage.getItem('lastPlayedTrack');
+    return savedTrack ? JSON.parse(savedTrack) : null;
+  }
+
   async function fetchNowPlaying() {
     try {
       const response = await fetch('/api/nowPlaying');
@@ -44,8 +53,10 @@
         if (data.isPlaying && data.song) {
           currentTrack = data;
           lastPlayedTrack = data.song;
-        } else if (data.noRecentTracks && lastPlayedTrack) {
-          currentTrack = { ...data, song: lastPlayedTrack };
+          saveLastPlayedTrack(data.song);
+        } else if (data.noRecentTracks) {
+          lastPlayedTrack = loadLastPlayedTrack();
+          currentTrack = lastPlayedTrack ? { ...data, song: lastPlayedTrack } : data;
         } else {
           currentTrack = data;
         }
@@ -69,6 +80,7 @@
   }
 
   onMount(() => {
+    lastPlayedTrack = loadLastPlayedTrack();
     fetchNowPlaying();
     const interval = setInterval(fetchNowPlaying, 30000); // Update every 30 seconds
     return () => clearInterval(interval);
@@ -88,7 +100,7 @@
         <p class="text-xs text-gray-500 mt-2">No current track playing</p>
       {/if}
     </div>
-  {:else if currentTrack && currentTrack.noRecentTracks}
+  {:else if currentTrack && currentTrack.noRecentTracks && !lastPlayedTrack}
     <p>No recent tracks played</p>
   {:else if error}
     <p class="text-red-500">{error}</p>
