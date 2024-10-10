@@ -18,6 +18,7 @@
   }
 
   let currentTrack: NowPlayingData | null = null;
+  let lastPlayedTrack: Track | null = null;
   let error: string | null = null;
   let timeSinceLastPlay: string = '';
 
@@ -39,7 +40,16 @@
 
       if (response.ok) {
         console.log('Parsed API response:', data);
-        currentTrack = data;
+
+        if (data.isPlaying && data.song) {
+          currentTrack = data;
+          lastPlayedTrack = data.song;
+        } else if (data.noRecentTracks && lastPlayedTrack) {
+          currentTrack = { ...data, song: lastPlayedTrack };
+        } else {
+          currentTrack = data;
+        }
+
         if (data.lastPlayedAt) {
           timeSinceLastPlay = formatTimeSince(data.lastPlayedAt);
         }
@@ -66,13 +76,16 @@
 </script>
 
 <div class="w-full h-full flex items-center justify-center p-4">
-  {#if currentTrack && currentTrack.song}
+  {#if currentTrack && (currentTrack.song || lastPlayedTrack)}
     <div class="flex flex-col items-center text-center">
-      <img src={currentTrack.song.albumImageUrl} alt="Album Art" class="w-24 h-24 rounded-lg mb-2" />
-      <p class="font-bold">{currentTrack.song.title}</p>
-      <p class="text-sm">{currentTrack.song.artist}</p>
+      <img src={currentTrack.song?.albumImageUrl || lastPlayedTrack?.albumImageUrl} alt="Album Art" class="w-24 h-24 rounded-lg mb-2" />
+      <p class="font-bold">{currentTrack.song?.title || lastPlayedTrack?.title}</p>
+      <p class="text-sm">{currentTrack.song?.artist || lastPlayedTrack?.artist}</p>
       {#if !currentTrack.isPlaying && timeSinceLastPlay}
         <p class="text-xs text-gray-500 mt-2">Last played {timeSinceLastPlay}</p>
+      {/if}
+      {#if currentTrack.noRecentTracks}
+        <p class="text-xs text-gray-500 mt-2">No current track playing</p>
       {/if}
     </div>
   {:else if currentTrack && currentTrack.noRecentTracks}
