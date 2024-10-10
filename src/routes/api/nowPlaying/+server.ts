@@ -9,26 +9,26 @@ const lastPlayedFile = process.env.VERCEL
 	: path.join(process.cwd(), 'last_played.json');
 
 interface LastPlayedTrack {
-    song: {
-        title: string;
-        artist: string;
-        album: string;
-        albumImageUrl: string;
-        songUrl: string;
-    };
-    lastPlayedAt: string;
+	song: {
+		title: string;
+		artist: string;
+		album: string;
+		albumImageUrl: string;
+		songUrl: string;
+	};
+	lastPlayedAt: string;
 }
 
 function saveLastPlayed(track: LastPlayedTrack) {
-    fs.writeFileSync(lastPlayedFile, JSON.stringify(track));
+	fs.writeFileSync(lastPlayedFile, JSON.stringify(track));
 }
 
 function getLastPlayed(): LastPlayedTrack | null {
-    if (fs.existsSync(lastPlayedFile)) {
-        const data = fs.readFileSync(lastPlayedFile, 'utf8');
-        return JSON.parse(data);
-    }
-    return null;
+	if (fs.existsSync(lastPlayedFile)) {
+		const data = fs.readFileSync(lastPlayedFile, 'utf8');
+		return JSON.parse(data);
+	}
+	return null;
 }
 
 export const GET: RequestHandler = async ({ fetch }) => {

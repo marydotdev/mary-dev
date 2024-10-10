@@ -38,12 +38,25 @@ import Weather from '$lib/Weather.svelte';
 		}
 	}
 
+	// Function to save books to local storage
+	function saveBooksToLocalStorage(books: any[]) {
+		localStorage.setItem('recentlyReadBooks', JSON.stringify(books));
+	}
+
+	// Function to get books from local storage
+	function getBooksFromLocalStorage(): any[] {
+		const storedBooks = localStorage.getItem('recentlyReadBooks');
+		return storedBooks ? JSON.parse(storedBooks) : [];
+	}
+
 	// Fetch recently read books
 	async function fetchRecentlyReadBooks() {
 		const response = await fetch('/api/read');
 		if (response.ok) {
 			const allBooks = await response.json();
-			recentlyReadBooks = allBooks.slice(0, 10);
+			const recentBooks = allBooks.slice(0, 10);
+			recentlyReadBooks = recentBooks;
+			saveBooksToLocalStorage(recentBooks);
 		} else {
 			console.error('Failed to fetch recently read books');
 		}
@@ -96,7 +109,13 @@ import Weather from '$lib/Weather.svelte';
 		mounted = true;
     fetchPosts();
 		fetchTopTracks();
+
+		// Load books from local storage first
+		recentlyReadBooks = getBooksFromLocalStorage();
+
+		// Then fetch the latest data
 		fetchRecentlyReadBooks();
+
 		const interval = setInterval(() => {
 			date = new Date();
 		}, 1000);
@@ -348,4 +367,3 @@ import Weather from '$lib/Weather.svelte';
 		}
 	}
 </style>
-
