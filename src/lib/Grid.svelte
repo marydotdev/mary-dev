@@ -3,6 +3,8 @@
   import NowPlaying from '$lib/NowPlaying.svelte';
 	import Mary3DViewer from './Mary3DViewer.svelte';
 	import Nav from './Nav.svelte';
+  import TopTracks from './TopTracks.svelte';
+	import TopArtists from './TopArtists.svelte';
 
   export let greeting;
   export let today;
@@ -14,15 +16,16 @@
 
   // Array of background color classes
   const bgColors = [
-    "bg-red-200 dark:bg-red-800",
-    "bg-blue-200 dark:bg-blue-800",
-    "bg-yellow-200 dark:bg-yellow-800",
-    "bg-green-200 dark:bg-green-800",
-    "bg-purple-200 dark:bg-purple-800"
+    "bg-zinc-100 dark:bg-zinc-900",
+    // "bg-red-200 dark:bg-red-800",
+    // "bg-blue-200 dark:bg-blue-800",
+    // "bg-yellow-200 dark:bg-yellow-800",
+    // "bg-green-200 dark:bg-green-800",
+    // "bg-purple-200 dark:bg-purple-800"
   ];
 </script>
 
-<div class='w-full h-full border-2 border-black'>
+<div class='w-full h-full text-black dark:text-white'>
   <div class="grid md:grid-cols-4 gap-2 h-full">
     {#each cells as item, i}
       <div
@@ -40,7 +43,7 @@
         >
           {#if i === 0}
             {#if mounted}
-              <div class="w-full flex flex-col items-center justify-around h-full p-4 font-space border-2 border-black">
+              <div class="w-full flex flex-col items-center justify-around h-full p-4 font-space">
                 <div class="w-full">
                   <h1 class="tracking-tighter text-xl sm:text-2xl font-medium">
                     <span>Good {greeting},</span>
@@ -61,20 +64,25 @@
               </div>
             {/if}
           {:else if i === 1}
-            <div class="relative w-full h-full border-2 border-black">
+            <div class="relative w-full h-full">
               <Mary3DViewer />
             </div>
           {:else if i === 2}
-            <div class="w-full h-full border-2 border-black">
+            <div class="w-full h-full">
               <Nav />
             </div>
           {:else if i === 3}
-            <div class="w-full h-full border-2 border-black">
-              <NowPlaying />
+            <div class="w-full h-full">
+              <!-- <NowPlaying /> -->
+               <TopArtists />
+            </div>
+          {:else if i === 4}
+            <div class="w-full h-full">
+              <TopTracks />
             </div>
           {:else}
-            <div class="w-full h-full border-2 border-black">
-              {item}
+            <div class="relative w-full h-full">
+              <Mary3DViewer />
             </div>
           {/if}
         </div>
