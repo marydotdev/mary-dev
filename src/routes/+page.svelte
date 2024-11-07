@@ -1,12 +1,11 @@
 <script lang="ts">
 	import Grid from '$lib/Grid.svelte';
-	import NowPlaying from '$lib/NowPlaying.svelte';
-import Weather from '$lib/Weather.svelte';
+	import Weather from '$lib/Weather.svelte';
 	import { onMount } from 'svelte';
 
 	let date = new Date();
 	let mounted = false;
-  let recentPosts: any[] = [];
+	let recentPosts: any[] = [];
 	let recentlyReadBooks: any[] = [];
 	let topTracks: any[] = [];
 	let topArtists: any[] = [];
@@ -28,7 +27,7 @@ import Weather from '$lib/Weather.svelte';
 
 	$: greeting = hours < 12 ? 'Morning' : hours <= 16 && hours >= 12 ? 'Afternoon' : 'Evening';
 
-  // Fetch recently read books
+	// Fetch recently read books
 	async function fetchPosts() {
 		const response = await fetch('/api/getPosts');
 		if (response.ok) {
@@ -108,7 +107,7 @@ import Weather from '$lib/Weather.svelte';
 
 	onMount(() => {
 		mounted = true;
-    fetchPosts();
+		fetchPosts();
 		fetchTopTracks();
 
 		// Load books from local storage first
@@ -132,11 +131,11 @@ import Weather from '$lib/Weather.svelte';
 </svelte:head>
 
 <div class="p-2 sm:p-4 md:p-8 w-full">
-  <div class="w-full h-[600px] lg:h-[800px]">
-  <Grid {greeting} {today} {time} {mounted} {Weather} />
-</div>
-<div>
-  <div class="w-full p-4 mt-2 bg-zinc-100 dark:bg-zinc-900 text-black dark:text-white">
+	<div class="w-full h-[600px] lg:h-[800px]">
+		<Grid {greeting} {today} {time} {mounted} {Weather} />
+	</div>
+	<div>
+		<div class="w-full p-4 mt-2 bg-zinc-100 dark:bg-zinc-900 text-black dark:text-white">
 			<div class="pb-4">
 				<h3 class="text-lg sm:text-xl font-medium">
 					<a href="/books" class="hover:underline underline-offset-8">Recently Read</a>
@@ -149,7 +148,7 @@ import Weather from '$lib/Weather.svelte';
 							<a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
 								<img src={book.cover} alt={`${book.title} Cover`} class="h-36 xl:h-48 mx-auto" />
 								<div
-									class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80  hover:backdrop-blur-sm"
+									class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80 hover:backdrop-blur-sm"
 								>
 									<div
 										class="h-full p-1 flex flex-col justify-between invisible group-hover:visible"
@@ -192,17 +191,8 @@ import Weather from '$lib/Weather.svelte';
 				<a href="/books" class="text-md hover:underline underline-offset-8">View Bookshelf &rarr;</a
 				>
 			</div>
+		</div>
 	</div>
-</div>
-</div>
-
-<div>
-  <div>
-    <NowPlaying />
-  </div>
-  <div>
-    <blockquote class="bluesky-embed" data-bluesky-uri="at://did:plc:d23ep7mnuzjcl7me5c6f7syg/app.bsky.feed.post/3la3grpq3uq25" data-bluesky-cid="bafyreiahhytj3xyndqiv5lkh5dlcow4wmjoxpq3w3zkvdsalqv5c6eeugu"><p lang="en">chappell roan inventing lesbian cuntry for tops<br><br><a href="https://bsky.app/profile/did:plc:d23ep7mnuzjcl7me5c6f7syg/post/3la3grpq3uq25?ref_src=embed">[image or embed]</a></p>&mdash; mary (<a href="https://bsky.app/profile/did:plc:d23ep7mnuzjcl7me5c6f7syg?ref_src=embed">@marydotdev.bsky.social</a>) <a href="https://bsky.app/profile/did:plc:d23ep7mnuzjcl7me5c6f7syg/post/3la3grpq3uq25?ref_src=embed">November 3, 2024 at 7:15 PM</a></blockquote><script async src="https://embed.bsky.app/static/embed.js" charset="utf-8"></script>
-  </div>
 </div>
 
 <style>

@@ -38,6 +38,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@atproto/api": "^0.13.14",
+		"@atproto/oauth-client-browser": "^0.3.0",
+		"@atproto/oauth-client-node": "^0.2.0",
 		"@notionhq/client": "^2.2.13",
 		"@supabase/supabase-js": "^2.33.1",
 		"clsx": "^2.1.1",
