@@ -1,7 +1,6 @@
 <script>
 	import '../app.css';
-	import Nav from '$lib/Nav.svelte';
-	import Footer from '$lib/Footer.svelte';
+
 </script>
 
 <div class="w-full max-w-[2000px] mx-auto min-h-screen flex flex-col justify-center">

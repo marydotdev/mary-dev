@@ -1,5 +1,10 @@
 <script lang="ts">
-	import Grid from '$lib/Grid.svelte';
+	import BskyPosts from '$lib/BskyPosts.svelte';
+import Grid from '$lib/Grid.svelte';
+	import NowPlaying from '$lib/NowPlaying.svelte';
+	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
+	import TopArtists from '$lib/TopArtists.svelte';
+	import TopTracks from '$lib/TopTracks.svelte';
 	import Weather from '$lib/Weather.svelte';
 	import { onMount } from 'svelte';
 
@@ -54,7 +59,7 @@
 		const response = await fetch('/api/read');
 		if (response.ok) {
 			const allBooks = await response.json();
-			const recentBooks = allBooks.slice(0, 10);
+			const recentBooks = allBooks.slice(0, 9);
 			recentlyReadBooks = recentBooks;
 			saveBooksToLocalStorage(recentBooks);
 		} else {
@@ -130,12 +135,90 @@
 	<meta name="description" content="Mary Haedrich's Website" />
 </svelte:head>
 
-<div class="p-2 sm:p-4 md:p-8 w-full">
-	<div class="w-full h-[600px] lg:h-[800px]">
-		<Grid {greeting} {today} {time} {mounted} {Weather} />
-	</div>
-	<div>
-		<div class="w-full p-4 mt-2 bg-zinc-100 dark:bg-zinc-900 text-black dark:text-white">
+<div class="px-2 pt-4 sm:p-4 md:p-8 w-full h-screen dark:text-zinc-200">
+	<div class="w-full">
+    <div class="w-full flex justify-end pr-4 pb-2">
+      <ThemeSwitch />
+    </div>
+    <!-- <div class="w-full h-full lg:h-[800px]">
+      <Grid {greeting} {today} {time} {mounted} {Weather} />
+    </div> -->
+  </div>
+  <div class="border-2 grid grid-cols-12">
+    <div class="col-span-6 lg:col-span-5 xl:col-span-3 w-full h-full">
+							{#if mounted}
+								<div class="w-full flex flex-col items-center justify-around h-full p-4 font-space">
+									<div class="w-full">
+										<h1 class="tracking-tighter text-xl sm:text-2xl font-medium">
+											<span>Good {greeting},</span>
+											<br />
+											<span>Visitor.</span>
+										</h1>
+
+										<h2 class="text-sm sm:text-base">
+											{today}
+											<br />
+											<span class="font-mono">{time}</span>
+										</h2>
+									</div>
+
+									<div class="w-full flex justify-end">
+										<svelte:component this={Weather} />
+									</div>
+								</div>
+							{/if}
+		</div>
+    <div class="hidden lg:block lg:col-span-2 xl:col-span-6" />
+    <div class="col-span-6 lg:col-span-5 xl:col-span-3">
+      <NowPlaying />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-12">
+    <div class="hidden lg:block sm:col-span-3 border-r-2 border-l-2 border-b-2">
+      <TopTracks />
+      <TopArtists />
+    </div>
+    <div class="col-span-12 lg:col-span-6 border-b-2 border-r-2 border-l-2">
+      <BskyPosts />
+    </div>
+    <div class="hidden lg:block sm:col-span-3 border-r-2 border-l-2 border-b-2">
+      <div class="w-full p-4 text-black dark:text-white rounded-lg">
+			<div class="pb-4">
+				<h3 class="text-base font-medium xl:text-xl">
+					<a href="/books" class="hover:underline underline-offset-8">Recently Read</a>
+				</h3>
+			</div>
+			<div class="w-full">
+				<ul class="w-fit grid grid-cols-2 xl:grid-cols-3 justify-between gap-8">
+					{#each recentlyReadBooks as book}
+						<li class="relative group h-32 w-20 xl:h-36 xl:w-24">
+							<a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
+								<img src={book.cover} alt={`${book.title} Cover`} class="w-full h-full object-cover" />
+								<!-- <div
+									class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80 hover:backdrop-blur-sm"
+								>
+									<div
+										class="h-full p-1 flex flex-col justify-between invisible group-hover:visible"
+									>
+										<div>
+											<p class="clamp text-sm">{book.title}</p>
+											<p class="text-sm">{book.author}</p>
+										</div>
+										<p class="w-full text-xs">Read {book.dateRead}</p>
+									</div>
+								</div> -->
+							</a>
+						</li>
+					{/each}
+				</ul>
+			</div>
+		</div>
+    </div>
+  </div>
+
+	<!-- <div>
+		<div class="w-full p-4 mt-2 bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-lg">
 			<div class="pb-4">
 				<h3 class="text-lg sm:text-xl font-medium">
 					<a href="/books" class="hover:underline underline-offset-8">Recently Read</a>
@@ -192,7 +275,7 @@
 				>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
 
 <style>

@@ -27,47 +27,47 @@
 
 {#await fetchDataPromise}
 	<div class="w-full flex flex-col gap-4">
-		<!-- <div class="w-full">
+		<div class="w-full p-4">
 			<div class="pb-4 space-y-1">
-				<h3 class="text-lg sm:text-xl font-medium">Top Artists</h3>
-				<p class="text-sm pb-4">Based on my recent Spotify data.</p>
+				<h3 class="text-base font-medium xl:text-xl">Top Artists</h3>
 			</div>
-			<div class="flex flex-col w-full gap-4">
+			<div class="flex flex-col w-full max-w-sm gap-4">
 				<div class="skeleton skeleton-card" />
 				<div class="skeleton skeleton-card" />
 				<div class="skeleton skeleton-card" />
 			</div>
-		</div> -->
+		</div>
 	</div>
 {:then _}
 	<div class="w-full flex flex-col gap-12">
 
 		<div class="w-full p-4">
 			<div class="pb-4 space-y-1">
-				<h3 class="text-lg sm:text-xl font-medium">Top Artists</h3>
+				<h3 class="text-base font-medium xl:text-xl">Top Artists</h3>
 			</div>
 			<div class="flex flex-col w-full max-w-sm gap-4">
 				<!-- {#await topArtists}
         <p>loading</p>
       {:then} -->
 				{#each topArtists.slice(0, 3) as artist}
-					<a href={artist.external_urls.spotify} target="_blank" rel="noreferrer">
+					<a href={artist.external_urls.spotify} target="_blank" rel="noreferrer" class="">
 							<div>
-								<div class="flex gap-2">
+								<div class="flex items-center gap-2">
 									<img
 										src={artist.images[1].url}
 										alt={`${artist.name}`}
-										class="h-24 aspect-square"
+										class="h-12 xl:h-24 aspect-square"
 									/>
-									<div class="w-full flex flex-col justify-between p-4">
-										<div class="space-y-1">
-											<p class="clamp text-xl">{artist.name}</p>
-											<p class="clamp">
-												{#each artist.genres.slice(0, 2) as genre, i}
+									<div class="w-full flex flex-col justify-between">
+										<div class="">
+											<p class="clamp text-base xl:text-xl">{artist.name}</p>
+											<p class="clamp text-sm xl:text-lg">
+												<!-- {#each artist.genres.slice(0, 2) as genre, i}
 													<span>
 														{genre}{i < artist.genres.length - 1 ? ', ' : ''}
 													</span>
-												{/each}
+												{/each} -->
+                        {artist.genres[0]}
 											</p>
 										</div>
 									</div>
@@ -92,7 +92,7 @@
 	}
 
 	.skeleton-card {
-		height: 120px; /* Adjust based on your card's height */
+		height: 3rem; /* Adjust based on your card's height */
 		width: 100%;
 	}
 
