@@ -1,169 +1,173 @@
 <script lang="ts">
-	import { AtpAgent } from '@atproto/api';
-	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
+import { AtpAgent } from '@atproto/api';
+import { onMount } from 'svelte';
+import { browser } from '$app/environment';
 
-	// Props
-	export let username = 'mary.dev';
-	export let appPassword = 'd5oq-wyam-wdhz-o3og';
-	export let initialHandle = 'mary.dev';
+// Props
+export let username = 'mary.dev';
+export let appPassword = 'd5oq-wyam-wdhz-o3og';
+export let initialHandle = 'mary.dev';
 
-	// Cache for 1 hour
-	const CACHE_DURATION = 60 * 60 * 1000;
-	const CACHE_KEY_PREFIX = 'bluesky_posts_';
+// Cache for 1 hour
+const CACHE_DURATION = 60 * 60 * 1000;
+const CACHE_KEY_PREFIX = 'bluesky_posts_';
+const POST_LIMIT = 20; // Added post limit constant
 
-	interface Post {
-		uri: string;
-		cid: string;
-		author: {
-			did: string;
-			handle: string;
-			displayName?: string;
-			avatar?: string;
-		};
-		text: string;
-		createdAt: string;
-		indexedAt: string;
-		hasImages: boolean;
-		hasVideo: boolean;
-		media?: Array<{
-			type: 'image' | 'video';
-			alt: string;
-			url: string;
-			poster?: string;
-		}>;
-		likeCount: number;
-		repostCount: number;
-		externalLinks: string[];
-	}
+interface Post {
+    uri: string;
+    cid: string;
+    author: {
+        did: string;
+        handle: string;
+        displayName?: string;
+        avatar?: string;
+    };
+    text: string;
+    createdAt: string;
+    indexedAt: string;
+    hasImages: boolean;
+    hasVideo: boolean;
+    media?: Array<{
+        type: 'image' | 'video';
+        alt: string;
+        url: string;
+        poster?: string;
+    }>;
+    likeCount: number;
+    repostCount: number;
+    externalLinks: string[];
+}
 
-	interface CacheEntry {
-		posts: Post[];
-		timestamp: number;
-		handle: string;
-	}
+interface CacheEntry {
+    posts: Post[];
+    timestamp: number;
+    handle: string;
+}
 
-	let handle = initialHandle;
-	let posts: Post[] = [];
-	let loading = false;
-	let error = '';
-	let agent: AtpAgent;
+let handle = initialHandle;
+let posts: Post[] = [];
+let loading = false;
+let error = '';
+let agent: AtpAgent;
 
-	function getCacheKey(handle: string): string {
-		return `${CACHE_KEY_PREFIX}${handle}`;
-	}
+function getCacheKey(handle: string): string {
+    return `${CACHE_KEY_PREFIX}${handle}`;
+}
 
-	function loadFromCache(handle: string): CacheEntry | null {
-		if (!browser) return null;
+function loadFromCache(handle: string): CacheEntry | null {
+    if (!browser) return null;
 
-		try {
-			const cached = localStorage.getItem(getCacheKey(handle));
-			if (cached) {
-				const data = JSON.parse(cached) as CacheEntry;
-				if (Date.now() - data.timestamp < CACHE_DURATION && data.handle === handle) {
-					return data;
-				}
-			}
-		} catch (e) {
-			console.error('Cache read error:', e);
-		}
-		return null;
-	}
+    try {
+        const cached = localStorage.getItem(getCacheKey(handle));
+        if (cached) {
+            const data = JSON.parse(cached) as CacheEntry;
+            if (Date.now() - data.timestamp < CACHE_DURATION && data.handle === handle) {
+                return data;
+            }
+        }
+    } catch (e) {
+        console.error('Cache read error:', e);
+    }
+    return null;
+}
 
-	function saveToCache(handle: string, posts: Post[]) {
-		if (!browser) return;
+function saveToCache(handle: string, posts: Post[]) {
+    if (!browser) return;
 
-		const entry: CacheEntry = {
-			posts,
-			timestamp: Date.now(),
-			handle
-		};
+    const entry: CacheEntry = {
+        posts,
+        timestamp: Date.now(),
+        handle
+    };
 
-		try {
-			localStorage.setItem(getCacheKey(handle), JSON.stringify(entry));
-		} catch (e) {
-			console.error('Cache write error:', e);
-		}
-	}
+    try {
+        localStorage.setItem(getCacheKey(handle), JSON.stringify(entry));
+    } catch (e) {
+        console.error('Cache write error:', e);
+    }
+}
 
-	async function fetchFresh(): Promise<Post[]> {
-		if (!agent) {
-			agent = new AtpAgent({ service: 'https://bsky.social' });
-			await agent.login({ identifier: username, password: appPassword });
-		}
+async function fetchFresh(): Promise<Post[]> {
+    if (!agent) {
+        agent = new AtpAgent({ service: 'https://bsky.social' });
+        await agent.login({ identifier: username, password: appPassword });
+    }
 
-		const response = await agent.getAuthorFeed({ actor: handle });
+    const response = await agent.getAuthorFeed({
+        actor: handle,
+        limit: POST_LIMIT // Added limit parameter
+    });
 
-		return response.data.feed.map((item) => ({
-			uri: item.post.uri || '',
-			cid: item.post.cid || '',
-			author: {
-				did: item.post.author.did || '',
-				handle: item.post.author.handle || '',
-				displayName: item.post.author.displayName,
-				avatar: item.post.author.avatar
-			},
-			text: item.post.record.text || '',
-			createdAt: item.post.record.createdAt || new Date().toISOString(),
-			indexedAt: item.post.indexedAt || new Date().toISOString(),
-			hasImages: !!item.post.embed?.images?.length,
-			hasVideo: !!item.post.embed?.thumbnail,
-			media: [
-				...(item.post.embed?.images?.map((img) => ({
-					type: 'image' as const,
-					alt: img.alt || '',
-					url: img.fullsize || img.thumb || ''
-				})) || []),
-				...(item.post.embed?.thumbnail
-					? [
-							{
-								type: 'video' as const,
-								alt: item.post.embed.alt || '',
-								url: item.post.embed.playlist || '',
-								poster: item.post.embed.thumbnail
-							}
-					  ]
-					: [])
-			],
-			likeCount: item.post.likeCount || 0,
-			repostCount: item.post.repostCount || 0,
-			externalLinks: item.post.record.text?.match(/(https?:\/\/[^\s]+)/g) || []
-		}));
-	}
+    return response.data.feed.map((item) => ({
+        uri: item.post.uri || '',
+        cid: item.post.cid || '',
+        author: {
+            did: item.post.author.did || '',
+            handle: item.post.author.handle || '',
+            displayName: item.post.author.displayName,
+            avatar: item.post.author.avatar
+        },
+        text: item.post.record.text || '',
+        createdAt: item.post.record.createdAt || new Date().toISOString(),
+        indexedAt: item.post.indexedAt || new Date().toISOString(),
+        hasImages: !!item.post.embed?.images?.length,
+        hasVideo: !!item.post.embed?.thumbnail,
+        media: [
+            ...(item.post.embed?.images?.map((img) => ({
+                type: 'image' as const,
+                alt: img.alt || '',
+                url: img.fullsize || img.thumb || ''
+            })) || []),
+            ...(item.post.embed?.thumbnail
+                ? [
+                    {
+                        type: 'video' as const,
+                        alt: item.post.embed.alt || '',
+                        url: item.post.embed.playlist || '',
+                        poster: item.post.embed.thumbnail
+                    }
+                ]
+                : [])
+        ],
+        likeCount: item.post.likeCount || 0,
+        repostCount: item.post.repostCount || 0,
+        externalLinks: item.post.record.text?.match(/(https?:\/\/[^\s]+)/g) || []
+    }));
+}
 
-	async function loadPosts() {
-		if (!handle) return;
+async function loadPosts() {
+    if (!handle) return;
 
-		try {
-			loading = true;
-			const cached = loadFromCache(handle);
+    try {
+        loading = true;
+        const cached = loadFromCache(handle);
 
-			if (cached) {
-				posts = cached.posts;
-				return;
-			}
+        if (cached) {
+            posts = cached.posts;
+            return;
+        }
 
-			posts = await fetchFresh();
-			saveToCache(handle, posts);
-		} catch (e) {
-			console.error('Failed to load posts:', e);
-			error = e instanceof Error ? e.message : 'Failed to load posts';
-			const cached = loadFromCache(handle);
-			if (cached) posts = cached.posts;
-		} finally {
-			loading = false;
-		}
-	}
+        posts = await fetchFresh();
+        saveToCache(handle, posts);
+    } catch (e) {
+        console.error('Failed to load posts:', e);
+        error = e instanceof Error ? e.message : 'Failed to load posts';
+        const cached = loadFromCache(handle);
+        if (cached) posts = cached.posts;
+    } finally {
+        loading = false;
+    }
+}
 
-	function formatNumber(num: number): string {
-		if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
-		if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
-		return num.toString();
-	}
+function formatNumber(num: number): string {
+    if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+    if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
+    return num.toString();
+}
 
-	onMount(() => {
-		loadPosts();
-	});
+onMount(() => {
+    loadPosts();
+});
 </script>
 
 <div class="p-4 h-fit bg-zinc-50 dark:bg-black">
@@ -214,12 +218,12 @@
   {/if} -->
 
 		<div
-			class="relative h-fit sm:max-h-[60vh] xl:max-h-[100vh] bg-zinc-100 dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800"
+			class="relative h-fit sm:max-h-[60vh] xl:max-h-[90vh] bg-zinc-100 dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800"
 		>
-			<div class="overflow-y-scroll scrollbar h-fit sm:max-h-[56vh] xl:max-h-[96vh] rounded-lg">
+			<div class="overflow-y-scroll scrollbar h-fit sm:max-h-[56vh] xl:max-h-[86vh] rounded-lg">
 				{#if posts.length > 0}
 					<div class="space-y-6">
-						{#each posts as post}
+						{#each posts.slice(0, POST_LIMIT) as post}
 							<div
 								class="cursor-pointer border rounded-lg p-4 text-lg bg-zinc-50 dark:bg-black hover:bg-white dark:hover:bg-zinc-800 dark:text-white dark:border-zinc-800"
 							>
