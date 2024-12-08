@@ -170,7 +170,7 @@ onMount(() => {
 });
 </script>
 
-<div class="p-4 h-fit bg-zinc-50 dark:bg-black">
+<div class="p-2 sm:p-4 h-fit bg-zinc-50 dark:bg-black">
 	<!-- <div class="mt-4 w-full bg-white dark:bg-zinc-900 hover:bg-neutral-50 dark:hover:bg-zinc-800 dark:text-white relative max-w-2xl min-w-[300px] mx-auto flex rounded-xl">
     <a href="https://bsky.app/profile/mary.dev" target="_blank" rel="noopener noreferrer nofollow" class="cursor-pointer ">
     </a>
@@ -218,14 +218,14 @@ onMount(() => {
   {/if} -->
 
 		<div
-			class="relative h-fit sm:max-h-[60vh] xl:max-h-[90vh] bg-zinc-100 dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800"
+			class="relative h-fit sm:max-h-[60vh] xl:max-h-[90vh] sm:bg-zinc-100 sm:dark:bg-zinc-900 rounded-xl sm:p-6 sm:border border-zinc-200 dark:border-zinc-800"
 		>
 			<div class="overflow-y-scroll scrollbar h-fit sm:max-h-[56vh] xl:max-h-[86vh] rounded-lg">
 				{#if posts.length > 0}
 					<div class="space-y-6">
 						{#each posts.slice(0, POST_LIMIT) as post}
 							<div
-								class="cursor-pointer border rounded-lg p-4 text-lg bg-zinc-50 dark:bg-black hover:bg-white dark:hover:bg-zinc-800 dark:text-white dark:border-zinc-800"
+								class="cursor-pointer border rounded-lg p-4 text-lg bg-zinc-50 dark:bg-black sm:hover:bg-white sm:dark:hover:bg-zinc-800 dark:text-white dark:border-zinc-800"
 							>
 								<div class="flex items-center gap-3 mb-3">
 									{#if post.author.avatar}
