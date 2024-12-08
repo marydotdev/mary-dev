@@ -37,4 +37,16 @@
       <ThemeSwitch />
     </div>
   </div>
+  <div class="">
+    <ul class="w-full flex flex-col justify-between text-sm font-medium text-zinc-800 dark:text-zinc-200">
+      {#each navLinks as nav}
+      <li class="relative">
+        <a href={nav.href} class="block px-3 py-2 {currentUrl === nav.href ? 'text-sky-500 dark:text-sky-400' : 'hover:text-sky-500 dark:hover:text-sky-400'}">
+          {nav.label}
+          <!-- <span class="{currentUrl === nav.href ? 'absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-sky-500/0 via-sky-500/40 to-sky-500/0 dark:from-sky-400/0 dark:via-sky-400/40 dark:to-sky-400/0' : ''}" /> -->
+        </a>
+      </li>
+      {/each}
+    </ul>
+  </div>
 </nav>

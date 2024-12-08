@@ -52,7 +52,7 @@
 
 </script>
 
-<div class="my-auto h-full flex flex-col">
+<div class="my-auto h-full flex flex-col sm:hover:cursor-pointer" title="Weather near me">
   {#await weather}
 	<p>...fetching current weather</p>
 {:then data}

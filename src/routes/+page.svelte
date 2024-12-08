@@ -1,10 +1,16 @@
 <script lang="ts">
+	import Book from '$lib/Book.svelte';
+  import BskyPosts from '$lib/BskyPosts.svelte';
+	import NowPlaying from '$lib/NowPlaying.svelte';
+	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
+	import TopArtists from '$lib/TopArtists.svelte';
+	import TopTracks from '$lib/TopTracks.svelte';
 	import Weather from '$lib/Weather.svelte';
 	import { onMount } from 'svelte';
 
 	let date = new Date();
 	let mounted = false;
-  let recentPosts: any[] = [];
+	let recentPosts: any[] = [];
 	let recentlyReadBooks: any[] = [];
 	let topTracks: any[] = [];
 	let topArtists: any[] = [];
@@ -26,7 +32,7 @@
 
 	$: greeting = hours < 12 ? 'Morning' : hours <= 16 && hours >= 12 ? 'Afternoon' : 'Evening';
 
-  // Fetch recently read books
+	// Fetch recently read books
 	async function fetchPosts() {
 		const response = await fetch('/api/getPosts');
 		if (response.ok) {
@@ -37,12 +43,25 @@
 		}
 	}
 
+	// Function to save books to local storage
+	function saveBooksToLocalStorage(books: any[]) {
+		localStorage.setItem('recentlyReadBooks', JSON.stringify(books));
+	}
+
+	// Function to get books from local storage
+	function getBooksFromLocalStorage(): any[] {
+		const storedBooks = localStorage.getItem('recentlyReadBooks');
+		return storedBooks ? JSON.parse(storedBooks) : [];
+	}
+
 	// Fetch recently read books
 	async function fetchRecentlyReadBooks() {
 		const response = await fetch('/api/read');
 		if (response.ok) {
 			const allBooks = await response.json();
-			recentlyReadBooks = allBooks.slice(0, 10);
+			const recentBooks = allBooks.slice(0, 8);
+			recentlyReadBooks = recentBooks;
+			saveBooksToLocalStorage(recentBooks);
 		} else {
 			console.error('Failed to fetch recently read books');
 		}
@@ -93,9 +112,15 @@
 
 	onMount(() => {
 		mounted = true;
-    fetchPosts();
-		fetchTopTracks();
+		fetchPosts();
+		// fetchTopTracks();
+
+		// Load books from local storage first
+		recentlyReadBooks = getBooksFromLocalStorage();
+
+		// Then fetch the latest data
 		fetchRecentlyReadBooks();
+
 		const interval = setInterval(() => {
 			date = new Date();
 		}, 1000);
@@ -110,176 +135,126 @@
 	<meta name="description" content="Mary Haedrich's Website" />
 </svelte:head>
 
-<div class="h-full">
-	<div class="flex flex-col gap-20 md:gap-8">
-		{#if mounted}
-			<div class="flex justify-between font-space">
-				<div class="w-72">
-					<h1 class="tracking-tighter text-xl sm:text-2xl font-medium">
-						<span>Good {greeting},</span>
-						<br />
-						<span>Visitor.</span>
-					</h1>
-
-					<h2 class="text-sm sm:text-base">
-						{today}
-						<br />
-						<span class="font-mono">{time}</span>
-					</h2>
-				</div>
-				<div class="flex justify-end">
-					<Weather />
-				</div>
-			</div>
-		{/if}
-
-    <!-- <div class="flex gap-2">
-      <img src="/img/rainmary.png" alt="Mary Haedrich" class="w-12 h-12 md:w-16 md:h-16 rounded-xl" />
-      <div>
-        <h3>computer mary</h3>
-        <h4>@marydotdev</h4>
+<div>
+  <!-- Top Section - Greeting, Weather, Now Playing, Theme Switch -->
+  <div class="grid grid-cols-12">
+    <div class="col-span-12 sm:col-span-5 lg:col-span-5 xl:col-span-3 w-full h-fit mt-auto">
+      <div class="flex w-full sm:hidden justify-end pr-6 pt-6 pb-2">
+        {#if mounted}
+          <ThemeSwitch />
+        {/if}
       </div>
-    </div> -->
+      <div class="w-full flex flex-col items-center justify-around h-full p-2 font-space rounded-xl">
+        <div class="w-full flex flex-col items-center justify-between min-h-[240px] p-6 font-space border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 rounded-xl">
+          {#if mounted}
+            <div class="w-full">
+              <h1 class="tracking-tighter text-xl sm:text-2xl font-medium">
+                <span>Good {greeting},</span>
+                <br />
+                <span>Visitor.</span>
+              </h1>
 
-    <div class="p-4 bg-zinc-100 hover:bg-zinc-200 dark:bg-black hover:dark:bg-zinc-800">
-      <a href="https://brickbloom.com" target="_blank" rel="noreferrer">
-        <img src="/img/bluejay-wide.png" alt="Brickbloom" class="rounded-xl" />
-      </a>
+              <h2 class="text-sm sm:text-base">
+                {today}
+                <br />
+                <span class="font-mono">{time}</span>
+              </h2>
+            </div>
+
+            <div class="w-full flex justify-end">
+              <svelte:component this={Weather} />
+            </div>
+          {:else}
+            <div class="w-full h-full">
+              <!-- Greeting text skeletons -->
+              <div class="space-y-2">
+                <div class="skeleton h-7 sm:h-8 w-48 rounded bg-gradient-to-r from-zinc-300 via-zinc-400 to-zinc-300 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+                <div class="skeleton h-7 sm:h-8 w-24 rounded bg-gradient-to-r from-zinc-300 via-zinc-400 to-zinc-300 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+              </div>
+
+              <!-- Date/Time skeletons -->
+              <div class="mt-4 space-y-1">
+                <div class="skeleton h-5 sm:h-6 w-36 rounded bg-gradient-to-r from-zinc-300 via-zinc-400 to-zinc-300 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+                <div class="skeleton h-5 sm:h-6 w-24 rounded bg-gradient-to-r from-zinc-300 via-zinc-400 to-zinc-300 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+              </div>
+            </div>
+
+            <!-- Weather component skeleton -->
+            <div class="w-full flex justify-end">
+              <div class="skeleton w-24 h-24 rounded bg-gradient-to-r from-zinc-300 via-zinc-400 to-zinc-300 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+            </div>
+          {/if}
+        </div>
+      </div>
     </div>
 
-		<div class="w-full">
-			<div class="pb-4">
-				<h3 class="text-lg sm:text-xl font-medium">
-					<a href="/books" class="hover:underline underline-offset-8">Recently Read</a>
-				</h3>
-			</div>
-			<div class="w-full marquee marquee--fit-content marquee--hover-pause">
-				<ul class="marquee__content">
-					{#each recentlyReadBooks as book}
-						<li class="flex-shrink-0 relative group">
-							<a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
-								<img src={book.cover} alt={`${book.title} Cover`} class="h-36 xl:h-48 mx-auto" />
-								<div
-									class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80  hover:backdrop-blur-sm"
-								>
-									<div
-										class="h-full p-1 flex flex-col justify-between invisible group-hover:visible"
-									>
-										<div>
-											<p class="clamp text-sm">{book.title}</p>
-											<p class="text-sm">{book.author}</p>
-										</div>
-										<p class="w-full text-xs">Read {book.dateRead}</p>
-									</div>
-								</div>
-							</a>
-						</li>
-					{/each}
-				</ul>
-				<ul class="marquee__content">
-					{#each recentlyReadBooks as book}
-						<li class="flex-shrink-0 relative group">
-							<a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
-								<img src={book.cover} alt={`${book.title} Cover`} class="h-36 xl:h-48 mx-auto" />
-								<div
-									class="absolute inset-0 hover:bg-zinc-50/60 dark:hover:bg-zinc-900/80 hover:backdrop-blur-sm"
-								>
-									<div
-										class="h-full p-1 flex flex-col justify-between invisible group-hover:visible"
-									>
-										<div>
-											<p class="clamp text-sm">{book.title}</p>
-											<p class="text-sm">{book.author}</p>
-										</div>
-										<p class="w-full text-xs">Read {book.dateRead}</p>
-									</div>
-								</div>
-							</a>
-						</li>
-					{/each}
-				</ul>
-			</div>
-			<div class="pt-4">
-				<a href="/books" class="text-md hover:underline underline-offset-8">View Bookshelf &rarr;</a
-				>
-			</div>
-		</div>
-	</div>
+
+    <div class="hidden sm:block sm:col-span-2 lg:block lg:col-span-2 xl:col-span-6" />
+    <div class="col-span-12 sm:col-span-5 lg:col-span-5 xl:col-span-3 flex flex-col">
+       <div class="hidden w-full sm:flex justify-end pr-6 py-2">
+        <ThemeSwitch />
+       </div>
+      <NowPlaying />
+    </div>
+  </div>
+
+  <!-- Middle Section - Top Tracks, Top Artists, Bsky Posts, Recently Read -->
+  <div class="grid grid-cols-1 sm:grid-cols-12 ">
+    <!-- Top Tracks and Artists -->
+    <div class="hidden lg:block sm:col-span-3">
+      <TopTracks />
+      <TopArtists />
+    </div>
+    <!-- Bsky Posts -->
+    <div class="xl:-mt-[17rem] col-span-12 lg:col-span-6">
+      <BskyPosts />
+    </div>
+    <!-- Recently Read -->
+    <div class="hidden lg:block sm:col-span-3">
+      <div class="p-2">
+        <div class="relative w-full p-6 text-black dark:text-white border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 rounded-xl">
+          <div class="pb-4">
+            <h3 class="text-base font-medium xl:text-xl">
+              <a href="/books" class="sm:hover:underline sm:underline-offset-8">Recently Read</a>
+            </h3>
+          </div>
+          <div class="w-full min-h-[540px] xl:min-h-[620px]">
+            <ul class="relative w-full grid grid-cols-2 justify-center place-content-around gap-4 xl:gap-6 overflow-hidden">
+              {#each recentlyReadBooks as book}
+                <li class="relative group mx-auto lg:h-32 xl:h-40">
+                  <a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
+                    <img src={book.cover} alt={`${book.title} Cover`} class="w-full h-full rounded-sm group-hover:shadow-xl group-hover:transform group-hover:scale-[102%]" />
+                  </a>
+                </li>
+                <!-- <Book {book} /> -->
+              {/each}
+            </ul>
+          </div>
+
+          <div class="absolute top-4 right-4 group hover:cursor-pointer">
+            <div class="w-6 h-6 text-zinc-700 dark:text-zinc-400 group-hover:text-[#372213] dark:group-hover:text-[#ebe7d0]">
+              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><title>Goodreads</title><path d="M11.43 23.995c-3.608-.208-6.274-2.077-6.448-5.078.695.007 1.375-.013 2.07-.006.224 1.342 1.065 2.43 2.683 3.026 1.583.496 3.737.46 5.082-.174 1.351-.636 2.145-1.822 2.503-3.577.212-1.042.236-1.734.231-2.92l-.005-1.631h-.059c-1.245 2.564-3.315 3.53-5.59 3.475-5.74-.054-7.68-4.534-7.528-8.606.01-5.241 3.22-8.537 7.557-8.495 2.354-.14 4.605 1.362 5.554 3.37l.059.002.002-2.918 2.099.004-.002 15.717c-.193 7.04-4.376 7.89-8.209 7.811zm6.1-15.633c-.096-3.26-1.601-6.62-5.503-6.645-3.954-.017-5.625 3.592-5.604 6.85-.013 3.439 1.643 6.305 4.703 6.762 4.532.591 6.551-3.411 6.404-6.967z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+
 <style>
-	/* Marquee styles */
-	.marquee {
-		--gap: 2rem;
-		position: relative;
-		display: flex;
-		overflow: hidden;
-		user-select: none;
-		gap: var(--gap);
-		width: 100vw;
-	}
+  .skeleton {
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
 
-	.marquee__content {
-		flex-shrink: 0;
-		display: flex;
-		justify-content: space-around;
-		gap: var(--gap);
-		min-width: 100%;
-	}
-
-	@keyframes scroll {
-		from {
-			transform: translateX(0);
-		}
-		to {
-			transform: translateX(calc(-100% - var(--gap)));
-		}
-	}
-
-	/* Pause animation when reduced-motion is set */
-	@media (prefers-reduced-motion: reduce) {
-		.marquee__content {
-			animation-play-state: paused !important;
-		}
-	}
-
-	/* Enable animation */
-	.marquee__content {
-		animation: scroll 100s linear infinite;
-	}
-
-	/* Pause on hover */
-	.marquee--hover-pause:hover .marquee__content {
-		animation-play-state: paused;
-	}
-
-	/* Attempt to size parent based on content. Keep in mind that the parent width is equal to both content containers that stretch to fill the parent. */
-	.marquee--fit-content {
-		max-width: fit-content;
-	}
-
-	@keyframes scroll-abs {
-		from {
-			transform: translateX(calc(100% + var(--gap)));
-		}
-		to {
-			transform: translateX(0);
-		}
-	}
-
-	/* Mobile styles */
-	@media (max-width: 768px) {
-		.marquee {
-			overflow-x: auto;
-			overflow-y: hidden;
-			white-space: nowrap;
-			scrollbar-width: thin;
-			scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
-		}
-
-		.marquee__content {
-			animation-play-state: paused !important;
-		}
-	}
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
 </style>
-

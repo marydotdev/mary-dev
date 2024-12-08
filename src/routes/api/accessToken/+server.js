@@ -10,6 +10,7 @@ const client_secret = SPOTIFY_CLIENT_SECRET;
 const refresh_token = SPOTIFY_REFRESH_TOKEN;
 const redirect_uri = "http://localhost:3000/"
 const token_endpoint = `https://accounts.spotify.com/api/token`;
+// const scope = 'user-read-currently-playing user-read-recently-played';
 
 export const GET = async () => {
 	const { access_token } = await fetch(token_endpoint, {
