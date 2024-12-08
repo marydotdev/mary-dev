@@ -51,9 +51,11 @@
 			<div class="w-full flex flex-col gap-12">
 				<div class="w-full pl-6 pr-4 py-6">
 					<div class="pb-4 space-y-1">
-            <a href="/music#toptracks" class="sm:hover:underline sm:underline-offset-8">
-              <h3 class="text-base font-medium xl:text-xl">Top Tracks</h3>
-            </a>
+              <h3 class="text-base font-medium xl:text-xl sm:hover:underline sm:underline-offset-8 w-fit">
+                <a href="/music#toptracks">
+                  Top Tracks
+                </a>
+              </h3>
 					</div>
 					<div class="flex flex-col max-w-sm gap-4">
 						{#each topTracks.slice(0, 3) as track}

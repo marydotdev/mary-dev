@@ -23,6 +23,21 @@
 	let trackData: NowPlayingData | null = null;
 	let error: string | null = null;
 
+  let fetchDataPromise: Promise<void>;
+
+  let topTracks: any[] = [];
+
+	// Fetch top tracks
+	async function fetchTopTracks() {
+		const response = await fetch('/api/topTracks');
+		if (response.ok) {
+			const data = await response.json();
+			topTracks = data.items;
+		} else {
+			console.error('Failed to fetch top tracks');
+		}
+	}
+
 	function formatTimeSince(dateString: string): string {
 		const date = new Date(dateString);
 		const now = new Date();
@@ -45,6 +60,7 @@
 
 	function loadRecentlyPlayed(): { song: Track; playedAt: string } | null {
 		const data = localStorage.getItem('recentlyPlayed');
+    // const data = null;
 		console.log('Loaded recently played track from local storage:', data);
 		return data ? JSON.parse(data) : null;
 	}
@@ -80,6 +96,9 @@
 
 	onMount(() => {
 		fetchTrackData();
+    fetchDataPromise = (async () => {
+			await fetchTopTracks();
+		})();
 		const interval = setInterval(fetchTrackData, 30000); // Update every 30 seconds
 		return () => clearInterval(interval);
 	});
@@ -93,7 +112,7 @@
 			{#if trackData}
 				{#if trackData.nowPlaying}
 					<div
-						class="text-center md:text-left w-fit flex flex-col mx-auto md:mx-0 md:flex-row gap-2"
+						class="text-center md:text-left w-fit flex flex-col mx-auto md:mx-0 md:flex-row gap-2 hover:bg-zinc-200 pr-4 rounded-xl hover:cursor-pointer dark:hover:bg-zinc-800"
 					>
 						<div class="flex justify-center items-end">
 							<img
@@ -112,7 +131,7 @@
 					</div>
 				{:else if trackData.recentlyPlayed}
 					<div
-						class="text-center md:text-left w-fit flex flex-col mx-auto md:mx-0 md:flex-row gap-2"
+						class="text-center md:text-left w-fit flex flex-col mx-auto md:mx-0 md:flex-row gap-2 hover:bg-zinc-200 pr-4 rounded-xl hover:cursor-pointer dark:hover:bg-zinc-800"
 					>
 						<div class="flex justify-center items-end">
 							<img
@@ -132,7 +151,55 @@
 						</div>
 					</div>
 				{:else}
-					<p>No recent tracks played</p>
+					{#await fetchDataPromise}
+            <div class="w-full flex flex-col gap-4">
+              <div class="w-full">
+                <div class="flex flex-col max-w-sm w-full gap-4">
+                  {#each Array(1) as _, i}
+                    <div class="flex items-center gap-2">
+
+                      <div class="skeleton h-24 aspect-square rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+
+                      <div class="flex-1 flex flex-col gap-2">
+
+                        <div class="skeleton h-6 w-3/4 rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+
+                        <div class="skeleton h-3 w-1/2 rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+                      </div>
+                    </div>
+                  {/each}
+                </div>
+              </div>
+            </div>
+          {:then _}
+            <div class="w-full flex flex-col gap-12">
+              <div class="w-full">
+                <div class="text-center md:text-left w-fit flex flex-col mx-auto md:mx-0 md:flex-row gap-2 hover:bg-zinc-200 pr-4 rounded-xl hover:cursor-pointer dark:hover:bg-zinc-800">
+                  {#each topTracks.slice(7, 8) as track}
+                    <a href={track.external_urls.spotify} target="_blank" rel="noreferrer">
+                      <div class="group">
+                        <div class="flex items-center gap-2 group-hover:bg-zinc-200 dark:group-hover:bg-zinc-800 rounded-lg">
+                          <img
+                            src={track.album.images[1].url}
+                            alt={`${track.album.name} Cover`}
+                            class="h-24 aspect-square rounded-lg"
+                          />
+                          <div class="w-full flex flex-col justify-between">
+                            <div class="">
+                              <p class="clamp text-base xl:text-lg text-zinc-700 dark:text-zinc-200 group-hover:text-zinc-900 dark:group-hover:text-zinc-100">{track.name}</p>
+                              <p class="text-zinc-500 dark:text-zinc-400 text-sm xl:text-base group-hover:text-zinc-700 dark:group-hover:text-zinc-200">{track.artists[0].name}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  {/each}
+                </div>
+              </div>
+            </div>
+          {:catch error}
+            <p>Error loading data: {error.message}</p>
+          {/await}
 				{/if}
 			{:else if error}
 				<p class="text-red-500">{error}</p>
@@ -148,7 +215,7 @@
 					<div class="w-fit flex flex-col justify-center gap-2">
 						<!-- Title skeleton -->
 						<div
-							class="skeleton h-5 w-48 sm:w-32 lg:w-48 rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800"
+							class="skeleton h-5 w-48 sm:w-32 xl:w-48 rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800"
 						/>
 						<!-- Artist skeleton -->
 						<div

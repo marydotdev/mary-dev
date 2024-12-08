@@ -58,9 +58,11 @@
 			<div class="w-full flex flex-col gap-12">
 				<div class="w-full pl-6 pr-4 py-6">
 					<div class="pb-4 space-y-1">
-						<a href="/music#topartists" class="sm:hover:underline sm:underline-offset-8">
-              <h3 class="text-base font-medium xl:text-xl">Top Artists</h3>
-            </a>
+						<h3 class="text-base font-medium xl:text-xl sm:hover:underline sm:underline-offset-8 w-fit">
+                <a href="/music#topartists">
+                  Top Artists
+                </a>
+              </h3>
 					</div>
 					<div class="flex flex-col w-full max-w-sm gap-4">
 						{#each topArtists.slice(0, 3) as artist}
