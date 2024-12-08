@@ -59,7 +59,7 @@
 		const response = await fetch('/api/read');
 		if (response.ok) {
 			const allBooks = await response.json();
-			const recentBooks = allBooks.slice(0, 8);
+			const recentBooks = allBooks.slice(0, 6);
 			recentlyReadBooks = recentBooks;
 			saveBooksToLocalStorage(recentBooks);
 		} else {
@@ -218,10 +218,10 @@
               <a href="/books" class="sm:hover:underline sm:underline-offset-8">Recently Read</a>
             </h3>
           </div>
-          <div class="w-full min-h-[540px] xl:min-h-[620px]">
-            <ul class="relative w-full grid grid-cols-2 justify-center place-content-around gap-4 xl:gap-6 overflow-hidden">
+          <div class="w-full min-h-[500px]">
+            <ul class="relative w-full grid grid-cols-2 justify-center place-content-around gap-4 xl:gap-6 overflow-hidden pt-4">
               {#each recentlyReadBooks as book}
-                <li class="relative group mx-auto lg:h-32 xl:h-40">
+                <li class="relative group mx-auto lg:h-32 xl:h-36">
                   <a href={`https://goodreads.com/${book.url}`} target="_blank" rel="noreferrer">
                     <img src={book.cover} alt={`${book.title} Cover`} class="w-full h-full rounded-sm group-hover:shadow-xl group-hover:transform group-hover:scale-[102%]" />
                   </a>

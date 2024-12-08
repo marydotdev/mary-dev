@@ -339,6 +339,13 @@ h6 {
   -webkit-line-clamp: 2;
 }
 
+.clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
 .clamp-3 {
   overflow: hidden;
   display: -webkit-box;

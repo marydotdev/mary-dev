@@ -28,19 +28,19 @@
 			<div class="w-full flex flex-col gap-4">
 				<div class="w-full p-6">
 					<div class="pb-4 space-y-1">
-						<h3 class="text-base font-medium xl:text-xl">Top Tracks</h3>
+						<h3 class="text-base font-medium">Top Tracks</h3>
 					</div>
 					<div class="flex flex-col max-w-sm w-full gap-4">
 						{#each Array(3) as _, i}
 							<div class="flex items-center gap-2">
 
-								<div class="skeleton h-12 xl:h-24 aspect-square rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+								<div class="skeleton h-12 aspect-square rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
 
 								<div class="flex-1 flex flex-col gap-2">
 
-									<div class="skeleton h-4 xl:h-6 w-3/4 rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+									<div class="skeleton h-4 w-3/4 rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
 
-									<div class="skeleton h-3 xl:h-5 w-1/2 rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
+									<div class="skeleton h-3 w-1/2 rounded bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800" />
 								</div>
 							</div>
 						{/each}
@@ -51,7 +51,7 @@
 			<div class="w-full flex flex-col gap-12">
 				<div class="w-full pl-6 pr-4 py-6">
 					<div class="pb-4 space-y-1">
-              <h3 class="text-base font-medium xl:text-xl sm:hover:underline sm:underline-offset-8 w-fit">
+              <h3 class="text-base font-medium sm:hover:underline sm:underline-offset-8 w-fit">
                 <a href="/music#toptracks">
                   Top Tracks
                 </a>
@@ -61,16 +61,16 @@
 						{#each topTracks.slice(0, 3) as track}
 							<a href={track.external_urls.spotify} target="_blank" rel="noreferrer">
 								<div class="group">
-									<div class="flex items-center gap-2 group-hover:bg-zinc-200 dark:group-hover:bg-zinc-800 rounded-lg">
+									<div class="w-fit pr-2 flex items-center gap-2 group-hover:bg-zinc-200 dark:group-hover:bg-zinc-800 rounded-lg">
 										<img
 											src={track.album.images[1].url}
 											alt={`${track.album.name} Cover`}
-											class="h-12 xl:h-20 aspect-square rounded-lg"
+											class="h-12 aspect-square rounded-lg"
 										/>
 										<div class="w-full flex flex-col justify-between">
 											<div class="">
-												<p class="clamp text-base xl:text-lg text-zinc-700 dark:text-zinc-200 group-hover:text-zinc-900 dark:group-hover:text-zinc-100">{track.name}</p>
-												<p class="text-zinc-500 dark:text-zinc-400 text-sm xl:text-base group-hover:text-zinc-700 dark:group-hover:text-zinc-200">{track.artists[0].name}</p>
+												<p class="clamp-1 text-base text-zinc-700 dark:text-zinc-200 group-hover:text-zinc-900 dark:group-hover:text-zinc-100">{track.name}</p>
+												<p class="clamp-1 text-zinc-500 dark:text-zinc-400 text-sm group-hover:text-zinc-700 dark:group-hover:text-zinc-200">{track.artists[0].name}</p>
 											</div>
 										</div>
 									</div>
