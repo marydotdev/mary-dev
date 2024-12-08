@@ -214,9 +214,9 @@
   {/if} -->
 
 		<div
-			class="relative h-fit sm:max-h-[60vh] xl:max-h-[90vh] bg-zinc-100 dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800"
+			class="relative h-fit sm:max-h-[60vh] xl:max-h-[100vh] bg-zinc-100 dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800"
 		>
-			<div class="overflow-y-scroll scrollbar h-fit sm:max-h-[56vh] xl:max-h-[86vh] rounded-lg">
+			<div class="overflow-y-scroll scrollbar h-fit sm:max-h-[56vh] xl:max-h-[96vh] rounded-lg">
 				{#if posts.length > 0}
 					<div class="space-y-6">
 						{#each posts as post}
