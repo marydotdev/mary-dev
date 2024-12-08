@@ -6,8 +6,6 @@ my lil slice of the world wide web
 
 - SvelteKit
 - Tailwind
-- Supabase
-- Twilio
 
 ## contributing
-please feel free to submit a pr to fix bugs and use whatever code you desire 
+please feel free to submit a pr to fix bugs and use whatever code you desire
