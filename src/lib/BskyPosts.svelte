@@ -224,7 +224,7 @@ onMount(() => {
 				{#if posts.length > 0}
 					<div class="space-y-6">
 						{#each posts.slice(0, POST_LIMIT) as post}
-							<a href={`https://bsky.app/profile/${post.author.handle}/post/${post.uri.split('/').pop()}`} target="_blank">
+							<a href={`https://bsky.app/profile/${post.author.handle}/post/${post.uri.split('/').pop()}`} target="_blank" class="block">
                 <div
 								class="cursor-pointer border rounded-lg p-4 text-lg bg-zinc-50 dark:bg-black sm:hover:bg-white sm:dark:hover:bg-zinc-800 dark:text-white dark:border-zinc-800"
                 >
