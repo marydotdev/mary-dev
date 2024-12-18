@@ -224,157 +224,159 @@ onMount(() => {
 				{#if posts.length > 0}
 					<div class="space-y-6">
 						{#each posts.slice(0, POST_LIMIT) as post}
-							<div
+							<a href={`https://bsky.app/profile/${post.author.handle}/post/${post.uri.split('/').pop()}`} target="_blank">
+                <div
 								class="cursor-pointer border rounded-lg p-4 text-lg bg-zinc-50 dark:bg-black sm:hover:bg-white sm:dark:hover:bg-zinc-800 dark:text-white dark:border-zinc-800"
-							>
-								<div class="flex items-center gap-3 mb-3">
-									{#if post.author.avatar}
-										<img
-											src={post.author.avatar}
-											alt={post.author.handle}
-											class="w-10 h-10 rounded-full object-cover"
-										/>
-									{:else}
-										<div
-											class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center"
-										>
-											<span class="text-xl">{post.author.handle[0].toUpperCase()}</span>
-										</div>
-									{/if}
-									<div>
-										<div class="font-semibold">
-											{post.author.displayName || post.author.handle}
-										</div>
-										<div class="text-sm text-zinc-400">@{post.author.handle}</div>
-									</div>
-								</div>
+                >
+                  <div class="flex items-center gap-3 mb-3">
+                    {#if post.author.avatar}
+                      <img
+                        src={post.author.avatar}
+                        alt={post.author.handle}
+                        class="w-10 h-10 rounded-full object-cover"
+                      />
+                    {:else}
+                      <div
+                        class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center"
+                      >
+                        <span class="text-xl">{post.author.handle[0].toUpperCase()}</span>
+                      </div>
+                    {/if}
+                    <div>
+                      <div class="font-semibold">
+                        {post.author.displayName || post.author.handle}
+                      </div>
+                      <div class="text-sm text-zinc-400">@{post.author.handle}</div>
+                    </div>
+                  </div>
 
-								<p class="whitespace-pre-wrap mb-4">{post.text}</p>
+                  <p class="whitespace-pre-wrap mb-4">{post.text}</p>
 
-								{#if post.media && post.media.length > 0}
-									<div
-										class="grid gap-2 mb-4"
-										class:grid-cols-2={post.media.length > 1 && !post.hasVideo}
-									>
-										{#each post.media as media}
-											{#if media.type === 'image'}
-												<img
-													src={media.url}
-													alt={media.alt}
-													class="rounded-lg w-full object-cover"
-													style="max-height: 400px;"
-												/>
-											{:else if media.type === 'video'}
-												<div
-													class="relative w-full bg-black rounded-lg overflow-hidden"
-													style="padding-top: 56.25%;"
-												>
-													{#if media.url}
-														<video
-															class="absolute top-0 left-0 w-full h-full"
-															controls
-															poster={media.poster || ''}
-															preload="metadata"
-															playsinline
-														>
-															<source src={media.url} type="video/mp4" />
-															Your browser does not support the video tag.
-														</video>
-													{:else}
-														<div
-															class="absolute top-0 left-0 w-full h-full flex items-center justify-center text-white"
-														>
-															Video unavailable
-														</div>
-													{/if}
-												</div>
-											{/if}
-										{/each}
-									</div>
-								{/if}
+                  {#if post.media && post.media.length > 0}
+                    <div
+                      class="grid gap-2 mb-4"
+                      class:grid-cols-2={post.media.length > 1 && !post.hasVideo}
+                    >
+                      {#each post.media as media}
+                        {#if media.type === 'image'}
+                          <img
+                            src={media.url}
+                            alt={media.alt}
+                            class="rounded-lg w-full object-cover"
+                            style="max-height: 400px;"
+                          />
+                        {:else if media.type === 'video'}
+                          <div
+                            class="relative w-full bg-black rounded-lg overflow-hidden"
+                            style="padding-top: 56.25%;"
+                          >
+                            {#if media.url}
+                              <video
+                                class="absolute top-0 left-0 w-full h-full"
+                                controls
+                                poster={media.poster || ''}
+                                preload="metadata"
+                                playsinline
+                              >
+                                <source src={media.url} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                            {:else}
+                              <div
+                                class="absolute top-0 left-0 w-full h-full flex items-center justify-center text-white"
+                              >
+                                Video unavailable
+                              </div>
+                            {/if}
+                          </div>
+                        {/if}
+                      {/each}
+                    </div>
+                  {/if}
 
-								{#if post.externalLinks.length > 0}
-									<div class="mb-4">
-										{#each post.externalLinks as link}
-											<a
-												href={link}
-												target="_blank"
-												rel="noopener noreferrer"
-												class="text-blue-500 hover:underline block"
-											>
-												{link}
-											</a>
-										{/each}
-									</div>
-								{/if}
+                  {#if post.externalLinks.length > 0}
+                    <div class="mb-4">
+                      {#each post.externalLinks as link}
+                        <a
+                          href={link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-blue-500 hover:underline block"
+                        >
+                          {link}
+                        </a>
+                      {/each}
+                    </div>
+                  {/if}
 
-								<div class="flex items-center justify-between text-sm text-zinc-500 pb-2.5">
-									<div>
-										{new Date(post.createdAt).toLocaleDateString()} at
-										{new Date(post.createdAt).toLocaleTimeString()}
-									</div>
-									<div class="flex gap-4">
-										<div title="Likes" class="flex items-center gap-1">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke-width="1.5"
-												stroke="currentColor"
-												class="h-5"
-											>
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-												/>
-											</svg>
-											<p>{formatNumber(post.likeCount)}</p>
-										</div>
-										<div title="Reposts" class="flex items-center gap-1">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke-width="1.5"
-												stroke="currentColor"
-												class="h-5"
-											>
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
-												/>
-											</svg>
-											<p>{formatNumber(post.repostCount)}</p>
-										</div>
-									</div>
-								</div>
+                  <div class="flex items-center justify-between text-sm text-zinc-500 pb-2.5">
+                    <div>
+                      {new Date(post.createdAt).toLocaleDateString()} at
+                      {new Date(post.createdAt).toLocaleTimeString()}
+                    </div>
+                    <div class="flex gap-4">
+                      <div title="Likes" class="flex items-center gap-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="h-5"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                          />
+                        </svg>
+                        <p>{formatNumber(post.likeCount)}</p>
+                      </div>
+                      <div title="Reposts" class="flex items-center gap-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="h-5"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
+                          />
+                        </svg>
+                        <p>{formatNumber(post.repostCount)}</p>
+                      </div>
+                    </div>
+                  </div>
 
-								<div
-									class="border-t border-zinc-300 dark:border-zinc-400 w-full pt-2.5 flex items-center gap-5 text-sm cursor-pointer"
-								>
-									<div class="flex items-center gap-2 cursor-pointer">
-										<img
-											src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20fill='none'%20viewBox='0%200%2024%2024'%3e%3cpath%20fill='rgb(10,122,255)'%20d='M19.002%203a3%203%200%200%201%203%203v10a3%203%200%200%201-3%203H12.28l-4.762%202.858A1%201%200%200%201%206.002%2021v-2h-1a3%203%200%200%201-3-3V6a3%203%200%200%201%203-3h14Z'/%3e%3c/svg%3e"
-											class="w-5 h-5"
-											alt="Reply"
-										/>
-										<p class="font-bold text-neutral-500 mb-px">Reply</p>
-									</div>
-									<div class="flex-1" />
-									<p
-										class="cursor-pointer text-[#0A7AFF] font-bold hover:underline hidden min-[450px]:inline"
-									>
-										View on Bluesky
-									</p>
-									<p
-										class="cursor-pointer text-[#0A7AFF] font-bold hover:underline min-[450px]:hidden"
-									>
-										<span class="hidden min-[380px]:inline">View on </span>Bluesky
-									</p>
-								</div>
-							</div>
+                  <div
+                    class="border-t border-zinc-300 dark:border-zinc-400 w-full pt-2.5 flex items-center gap-5 text-sm cursor-pointer"
+                  >
+                    <div class="flex items-center gap-2 cursor-pointer">
+                      <img
+                        src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20fill='none'%20viewBox='0%200%2024%2024'%3e%3cpath%20fill='rgb(10,122,255)'%20d='M19.002%203a3%203%200%200%201%203%203v10a3%203%200%200%201-3%203H12.28l-4.762%202.858A1%201%200%200%201%206.002%2021v-2h-1a3%203%200%200%201-3-3V6a3%203%200%200%201%203-3h14Z'/%3e%3c/svg%3e"
+                        class="w-5 h-5"
+                        alt="Reply"
+                      />
+                      <p class="font-bold text-neutral-500 mb-px">Reply</p>
+                    </div>
+                    <div class="flex-1" />
+                    <p
+                      class="cursor-pointer text-[#0A7AFF] font-bold hover:underline hidden min-[450px]:inline"
+                    >
+                      View on Bluesky
+                    </p>
+                    <p
+                      class="cursor-pointer text-[#0A7AFF] font-bold hover:underline min-[450px]:hidden"
+                    >
+                      <span class="hidden min-[380px]:inline">View on </span>Bluesky
+                    </p>
+                  </div>
+                </div>
+              </a>
 						{/each}
 					</div>
 				{/if}
